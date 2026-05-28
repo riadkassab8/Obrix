@@ -489,12 +489,86 @@ export function Work() {
   const { lang } = useLang();
   
   const projects = [
-    { titleEn: "Project Alpha", titleAr: "مشروع ألفا", category: "Web", gradient: "from-[var(--accent1)] to-[var(--accent2)]" },
-    { titleEn: "Project Beta", titleAr: "مشروع بيتا", category: "Marketing", gradient: "from-[var(--accent2)] to-[#3b82f6]" },
-    { titleEn: "Project Gamma", titleAr: "مشروع جاما", category: "Desktop", gradient: "from-[var(--accent3)] to-[#ec4899]" },
-    { titleEn: "Project Delta", titleAr: "مشروع دلتا", category: "Branding", gradient: "from-[var(--gold)] to-[#f97316]" },
-    { titleEn: "Project Epsilon", titleAr: "مشروع إبسيلون", category: "Web + Marketing", gradient: "from-[#3b82f6] to-[var(--accent1)]" },
-    { titleEn: "Project Zeta", titleAr: "مشروع زيتا", category: "Full Package", gradient: "from-[#ec4899] to-[var(--accent3)]" },
+    {
+      titleEn: "Vacherin Coffee",
+      titleAr: "فاشيران كوفي",
+      descEn: "Premium coffee brand store",
+      descAr: "متجر علامة قهوة فاخرة",
+      category: "Web · Branding",
+      gradient: "from-[#4a2c0a] via-[#a0522d] to-[#d4a96a]",
+      accent: "#d4a96a",
+      url: "https://funny-vacherin-a055e.netlify.app/",
+    },
+    {
+      titleEn: "Dr. Mohamed",
+      titleAr: "د. محمد",
+      descEn: "Medical professional portfolio",
+      descAr: "بورتفوليو طبي احترافي",
+      category: "Web · Portfolio",
+      gradient: "from-[#0a2540] via-[#1a4f8a] to-[#00c2cb]",
+      accent: "#00c2cb",
+      url: "https://drmohamedpage.netlify.app/",
+    },
+    {
+      titleEn: "Sneakers Store",
+      titleAr: "سنيكرز ستور",
+      descEn: "Urban sneaker e-commerce",
+      descAr: "متجر إلكتروني للأحذية الرياضية",
+      category: "E-Commerce",
+      gradient: "from-[#0f0f0f] via-[#1a1a2e] to-[#e94560]",
+      accent: "#e94560",
+      url: "https://sneakers-ecommerce-henna.vercel.app/",
+    },
+    {
+      titleEn: "JUBA Store",
+      titleAr: "جوبا ستور",
+      descEn: "Fashion brand landing page",
+      descAr: "صفحة هبوط لعلامة أزياء",
+      category: "Web · Fashion",
+      gradient: "from-[#1c1c1c] via-[#3d2b1f] to-[#c9a84c]",
+      accent: "#c9a84c",
+      url: "https://juba-store.vercel.app/",
+    },
+    {
+      titleEn: "Coffee Corner",
+      titleAr: "كوفي كورنر",
+      descEn: "Digital menu for coffee shops",
+      descAr: "قائمة رقمية لمقاهي القهوة",
+      category: "Web · Hospitality",
+      gradient: "from-[#2c1810] via-[#5c3a1e] to-[#c8865a]",
+      accent: "#c8865a",
+      url: "https://coffee-corner-a1zq.vercel.app/",
+    },
+    {
+      titleEn: "Quran Academy",
+      titleAr: "أكاديمية القرآن",
+      descEn: "Online Quran learning platform",
+      descAr: "منصة تعليم القرآن الكريم",
+      category: "Web · Education",
+      gradient: "from-[#0d2b1d] via-[#1a5c3a] to-[#c9a84c]",
+      accent: "#c9a84c",
+      url: "https://quran-academy-sooty.vercel.app/",
+    },
+    {
+      titleEn: "Sabora Academy",
+      titleAr: "أكاديمية صابورا",
+      descEn: "Learning website landing page",
+      descAr: "صفحة هبوط لمنصة تعليمية",
+      category: "Web · EdTech",
+      gradient: "from-[#1a0533] via-[#4a1982] to-[#00e5c8]",
+      accent: "#00e5c8",
+      url: "https://sabora-acadimy.vercel.app/",
+    },
+    {
+      titleEn: "Café Cashier",
+      titleAr: "نظام الكاشير",
+      descEn: "Full POS system for coffee shops",
+      descAr: "نظام نقاط بيع متكامل للمقاهي",
+      category: "Desktop · SaaS",
+      gradient: "from-[#060610] via-[#0d1b4b] to-[#6c63ff]",
+      accent: "#6c63ff",
+      url: "https://cahier-angular-qhet.vercel.app/login",
+    },
   ];
 
   return (
@@ -511,30 +585,67 @@ export function Work() {
           </div>
         </FadeInWhenVisible>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {projects.map((p, i) => (
-            <FadeInWhenVisible key={i} delay={i * 0.1}>
-              <motion.div 
-                whileHover={{ scale: 0.98 }}
-                className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer isolate"
+            <FadeInWhenVisible key={i} delay={i * 0.07}>
+              <motion.a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid={`portfolio-card-${i}`}
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer isolate block"
+                style={{ boxShadow: "0 0 0 1px var(--card-border)" }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} opacity-80 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                
-                <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <span className="text-white/80 text-sm font-bold uppercase tracking-wider mb-2 block">{p.category}</span>
-                    <h3 className="text-white text-2xl font-bold">{lang === "en" ? p.titleEn : p.titleAr}</h3>
+                <div className={`absolute inset-0 bg-gradient-to-b ${p.gradient} transition-opacity duration-500`} />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500" />
+
+                {/* noise texture */}
+                <div className="absolute inset-0 opacity-20" style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                  backgroundSize: "200px 200px"
+                }} />
+
+                {/* category chip */}
+                <div className="absolute top-4 start-4">
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md"
+                    style={{
+                      backgroundColor: "rgba(0,0,0,0.45)",
+                      color: p.accent,
+                      border: `1px solid ${p.accent}44`,
+                    }}
+                  >
+                    {p.category}
+                  </span>
+                </div>
+
+                {/* bottom info */}
+                <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end"
+                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)" }}
+                >
+                  <h3 className="text-white font-bold text-lg leading-tight mb-1">
+                    {lang === "en" ? p.titleEn : p.titleAr}
+                  </h3>
+                  <p className="text-white/70 text-xs mb-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                    {lang === "en" ? p.descEn : p.descAr}
+                  </p>
+                  <div
+                    className="inline-flex items-center gap-1.5 text-xs font-bold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
+                    style={{ color: p.accent }}
+                  >
+                    {lang === "en" ? "View Live" : "مشاهدة المشروع"}
+                    {lang === "en" ? <ArrowRight className="w-3 h-3" /> : <ArrowLeft className="w-3 h-3" />}
                   </div>
                 </div>
 
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100">
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2">
-                    {lang === "en" ? "View Project" : "مشاهدة المشروع"}
-                    {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-                  </div>
-                </div>
-              </motion.div>
+                {/* glow ring on hover */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ boxShadow: `inset 0 0 0 1.5px ${p.accent}66` }}
+                />
+              </motion.a>
             </FadeInWhenVisible>
           ))}
         </div>
