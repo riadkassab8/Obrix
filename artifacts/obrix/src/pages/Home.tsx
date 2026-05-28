@@ -12,6 +12,50 @@ import { Button } from "@/components/ui/button";
 const WA_URL = "https://wa.me/201098277229";
 const GMAIL   = "mailto:riadkassab320@gmail.com";
 
+/* ── Legendary smooth scroll (easeInOutExpo) ── */
+function useSmoothScroll() {
+  useEffect(() => {
+    const easeInOutExpo = (t: number) => {
+      if (t === 0) return 0;
+      if (t === 1) return 1;
+      return t < 0.5
+        ? Math.pow(2, 20 * t - 10) / 2
+        : (2 - Math.pow(2, -20 * t + 10)) / 2;
+    };
+
+    const scrollTo = (targetY: number, duration = 950) => {
+      const startY = window.scrollY;
+      const dist = targetY - startY;
+      let t0: number | null = null;
+
+      const step = (now: number) => {
+        if (t0 === null) t0 = now;
+        const p = Math.min((now - t0) / duration, 1);
+        window.scrollTo(0, startY + dist * easeInOutExpo(p));
+        if (p < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
+      if (!link) return;
+      const hash = link.getAttribute("href");
+      if (!hash) return;
+      e.preventDefault();
+      if (hash === "#") { scrollTo(0); return; }
+      const el = document.querySelector(hash);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 84;
+      scrollTo(top);
+    };
+
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+}
+
 /* ── UIverse animated gradient button ── */
 function UIverseBtn({
   children,
@@ -1001,6 +1045,7 @@ export function Footer() {
 }
 
 export default function Home() {
+  useSmoothScroll();
   return (
     <div className="w-full flex flex-col font-sans transition-colors duration-300 relative overflow-x-hidden">
       <CursorGlow />
