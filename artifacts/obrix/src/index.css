@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Cairo:wght@300;400;600;700;800&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-border: var(--border);
+  
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
+  
+  --color-primary: var(--accent1);
+  --color-secondary: var(--accent2);
+}
+
+:root, html[data-theme="light"] {
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --surface2: #f0eeea;
+  --border: rgba(0,0,0,0.08);
+  --text: #111118;
+  --text-muted: #777788;
+  --card-bg: rgba(255,255,255,0.9);
+  --card-border: rgba(0,0,0,0.1);
+  --navbar-bg: rgba(248,247,244,0.85);
+
+  --accent1: #6c63ff;
+  --accent2: #00e5c8;
+  --accent3: #b06cf7;
+  --accent4: #ff6b6b;
+  --gold: #f5c542;
+}
+
+html[data-theme="dark"] {
+  --bg: #060610;
+  --surface: #0d0d1a;
+  --surface2: #12122a;
+  --border: rgba(255,255,255,0.06);
+  --text: #f0f0f8;
+  --text-muted: #5a5a7a;
+  --card-bg: rgba(255,255,255,0.03);
+  --card-border: rgba(255,255,255,0.08);
+  --navbar-bg: rgba(6,6,16,0.85);
+
+  --accent1: #6c63ff;
+  --accent2: #00e5c8;
+  --accent3: #b06cf7;
+  --accent4: #ff6b6b;
+  --gold: #f5c542;
+}
+
+*, *::before, *::after { 
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+}
