@@ -536,12 +536,9 @@ export function Work() {
     {
       titleEn: "Vacherin Coffee",
       titleAr: "فاشيران كوفي",
-      descEn: "High-end coffee brand store with rich visuals and smooth shopping experience.",
+      descEn: "High-end coffee brand store with rich visuals and a smooth shopping experience.",
       descAr: "متجر علامة قهوة فاخرة بتصميم راقٍ وتجربة تسوق سلسة.",
-      techEn: "React · Tailwind CSS · Netlify",
-      techAr: "React · Tailwind CSS · Netlify",
-      category: "Web · Branding",
-      accent: "#d4a96a",
+      tags: ["React", "Tailwind CSS", "E-Commerce", "Netlify"],
       url: "https://funny-vacherin-a055e.netlify.app/",
     },
     {
@@ -549,10 +546,7 @@ export function Work() {
       titleAr: "د. محمد",
       descEn: "Personal portfolio for a medical professional with clean layout and service sections.",
       descAr: "بورتفوليو طبي احترافي بتصميم أنيق وأقسام للخدمات.",
-      techEn: "React · CSS Animations · Netlify",
-      techAr: "React · CSS Animations · Netlify",
-      category: "Web · Portfolio",
-      accent: "#00c2cb",
+      tags: ["React", "CSS Animations", "Portfolio", "Netlify"],
       url: "https://drmohamedpage.netlify.app/",
     },
     {
@@ -560,65 +554,47 @@ export function Work() {
       titleAr: "سنيكرز ستور",
       descEn: "Full e-commerce store for a sneaker brand with product pages and cart.",
       descAr: "متجر إلكتروني متكامل لعلامة أحذية رياضية مع صفحات منتجات وسلة.",
-      techEn: "React · E-Commerce · Vercel",
-      techAr: "React · E-Commerce · Vercel",
-      category: "E-Commerce",
-      accent: "#e94560",
+      tags: ["React", "E-Commerce", "Fashion", "Responsive"],
       url: "https://sneakers-ecommerce-henna.vercel.app/",
     },
     {
       titleEn: "JUBA Store",
       titleAr: "جوبا ستور",
-      descEn: "Fashion brand landing page with bold typography and collection showcase.",
-      descAr: "صفحة هبوط لعلامة أزياء بطباعة جريئة وعرض للمجموعات.",
-      techEn: "React · Tailwind CSS · Vercel",
-      techAr: "React · Tailwind CSS · Vercel",
-      category: "Web · Fashion",
-      accent: "#c9a84c",
+      descEn: "Luxury fashion and footwear e-commerce platform with elegant design and seamless shopping experience.",
+      descAr: "منصة تجارة إلكترونية للأزياء والأحذية بتصميم أنيق وتجربة تسوق سلسة.",
+      tags: ["React", "E-Commerce", "Fashion", "Responsive"],
       url: "https://juba-store.vercel.app/",
     },
     {
       titleEn: "Coffee Corner",
       titleAr: "كوفي كورنر",
-      descEn: "Interactive digital menu for coffee shops — elegant and easy to browse.",
-      descAr: "قائمة رقمية تفاعلية للمقاهي — أنيقة وسهلة التصفح.",
-      techEn: "React · Interactive UI · Vercel",
-      techAr: "React · Interactive UI · Vercel",
-      category: "Web · Hospitality",
-      accent: "#c8865a",
+      descEn: "Modern coffee shop website with elegant design and smooth animations.",
+      descAr: "موقع مقهى عصري بتصميم أنيق وأنيميشن سلس.",
+      tags: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
       url: "https://coffee-corner-a1zq.vercel.app/",
     },
     {
       titleEn: "Quran Academy",
       titleAr: "أكاديمية القرآن",
-      descEn: "Landing page for an online Quran learning platform with class booking.",
-      descAr: "صفحة هبوط لمنصة تعليم القرآن الكريم مع حجز الحصص.",
-      techEn: "React · Tailwind CSS · Vercel",
-      techAr: "React · Tailwind CSS · Vercel",
-      category: "Web · Education",
-      accent: "#5cb85c",
+      descEn: "Islamic learning platform with Quran recitation, lessons, and educational resources.",
+      descAr: "منصة تعليم إسلامية لتحفيظ القرآن والدروس والمحتوى التعليمي.",
+      tags: ["React", "Next.js", "Tailwind CSS", "Islamic Content"],
       url: "https://quran-academy-sooty.vercel.app/",
     },
     {
       titleEn: "Sabora Academy",
       titleAr: "أكاديمية صابورا",
-      descEn: "EdTech landing page for an online learning platform with course listings.",
-      descAr: "صفحة هبوط لمنصة تعليمية إلكترونية مع عرض الكورسات.",
-      techEn: "React · CSS · Vercel",
-      techAr: "React · CSS · Vercel",
-      category: "Web · EdTech",
-      accent: "#00e5c8",
+      descEn: "Modern educational academy platform with courses, student management, and learning resources.",
+      descAr: "منصة أكاديمية تعليمية حديثة مع كورسات وإدارة طلاب ومحتوى تعليمي.",
+      tags: ["React", "Next.js", "Education", "LMS"],
       url: "https://sabora-acadimy.vercel.app/",
     },
     {
       titleEn: "Café Cashier",
-      titleAr: "نظام الكاشير",
-      descEn: "Full POS system for coffee shops — orders, inventory, and reports in one dashboard.",
-      descAr: "نظام نقاط بيع متكامل للمقاهي — طلبات ومخزون وتقارير في لوحة واحدة.",
-      techEn: "Angular · TypeScript · Vercel",
-      techAr: "Angular · TypeScript · Vercel",
-      category: "Desktop · SaaS",
-      accent: "#6c63ff",
+      titleAr: "كاشير الكافيه",
+      descEn: "Complete dashboard system with advanced features, data visualization, analytics, and comprehensive admin panel.",
+      descAr: "نظام لوحة تحكم متكامل مع ميزات متقدمة وتحليلات ولوحة إدارة شاملة.",
+      tags: ["Angular", "TypeScript", "Dashboard", "Charts"],
       url: "https://cahier-angular-qhet.vercel.app/login",
     },
   ];
@@ -637,7 +613,7 @@ export function Work() {
           </div>
         </FadeInWhenVisible>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p, i) => (
             <FadeInWhenVisible key={i} delay={i * 0.07}>
               <motion.a
@@ -645,66 +621,57 @@ export function Work() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid={`portfolio-card-${i}`}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
                 className="group block rounded-2xl overflow-hidden cursor-pointer"
                 style={{
                   backgroundColor: "var(--surface)",
                   border: "1px solid var(--card-border)",
                 }}
               >
-                {/* live preview — iframe fills the top portion */}
-                <div className="relative overflow-hidden" style={{ height: 200 }}>
+                {/* ── live preview iframe ── */}
+                <div className="relative overflow-hidden" style={{ height: 220 }}>
                   <LivePreview url={p.url} />
-                  {/* hover overlay with "View Live" */}
+                  {/* hover dim + "View Live" pill */}
                   <div
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ backgroundColor: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
+                    style={{ backgroundColor: "rgba(0,0,0,0.52)", backdropFilter: "blur(3px)" }}
                   >
-                    <span
-                      className="flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full"
-                      style={{
-                        backgroundColor: p.accent + "22",
-                        color: p.accent,
-                        border: `1px solid ${p.accent}55`,
-                      }}
-                    >
+                    <span className="flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full bg-white/10 text-white border border-white/25">
                       {lang === "en" ? "View Live" : "مشاهدة المشروع"}
-                      {lang === "en" ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                      {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
                     </span>
                   </div>
                 </div>
 
-                {/* info below the preview — always visible */}
-                <div className="p-4">
-                  {/* category chip */}
-                  <span
-                    className="inline-block text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3"
-                    style={{
-                      backgroundColor: p.accent + "18",
-                      color: p.accent,
-                    }}
-                  >
-                    {p.category}
-                  </span>
-
+                {/* ── info card ── */}
+                <div className="p-5">
                   {/* title */}
-                  <h3 className="font-bold text-base leading-snug mb-1.5" style={{ color: "var(--text)" }}>
+                  <h3 className="font-bold text-xl leading-snug mb-2" style={{ color: "var(--text)" }}>
                     {lang === "en" ? p.titleEn : p.titleAr}
                   </h3>
 
                   {/* description */}
-                  <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
                     {lang === "en" ? p.descEn : p.descAr}
                   </p>
 
-                  {/* tech stack */}
-                  <p
-                    className="text-[11px] font-mono font-semibold tracking-wide"
-                    style={{ color: p.accent + "cc" }}
-                  >
-                    {lang === "en" ? p.techEn : p.techAr}
-                  </p>
+                  {/* tech tag pills — individual badges */}
+                  <div className="flex flex-wrap gap-2">
+                    {p.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs font-semibold px-3 py-1 rounded-full"
+                        style={{
+                          backgroundColor: "var(--surface2)",
+                          color: "var(--text-muted)",
+                          border: "1px solid var(--card-border)",
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </motion.a>
             </FadeInWhenVisible>
