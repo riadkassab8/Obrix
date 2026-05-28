@@ -488,7 +488,7 @@ export function Services() {
 const IFRAME_W = 1280;
 const IFRAME_H = 960;
 
-function LivePreview({ url, gradient }: { url: string; gradient: string }) {
+function LivePreview({ url }: { url: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.22);
 
@@ -504,10 +504,9 @@ function LivePreview({ url, gradient }: { url: string; gradient: string }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
-      {/* gradient always renders as fallback */}
-      <div className={`absolute inset-0 bg-gradient-to-b ${gradient}`} />
-      {/* scaled iframe on top — pointer-events:none so clicks hit the anchor */}
+    <div ref={containerRef} className="relative w-full overflow-hidden rounded-xl" style={{ height: 220 }}>
+      {/* neutral dark fallback — no color */}
+      <div className="absolute inset-0" style={{ backgroundColor: "var(--surface2)" }} />
       <iframe
         src={url}
         width={IFRAME_W}
@@ -526,8 +525,6 @@ function LivePreview({ url, gradient }: { url: string; gradient: string }) {
         }}
         sandbox="allow-same-origin allow-scripts allow-forms"
       />
-      {/* subtle tint so the iframe blends with dark card style */}
-      <div className="absolute inset-0 bg-black/25" />
     </div>
   );
 }
@@ -539,80 +536,88 @@ export function Work() {
     {
       titleEn: "Vacherin Coffee",
       titleAr: "فاشيران كوفي",
-      descEn: "Premium coffee brand store",
-      descAr: "متجر علامة قهوة فاخرة",
+      descEn: "High-end coffee brand store with rich visuals and smooth shopping experience.",
+      descAr: "متجر علامة قهوة فاخرة بتصميم راقٍ وتجربة تسوق سلسة.",
+      techEn: "React · Tailwind CSS · Netlify",
+      techAr: "React · Tailwind CSS · Netlify",
       category: "Web · Branding",
-      gradient: "from-[#4a2c0a] via-[#a0522d] to-[#d4a96a]",
       accent: "#d4a96a",
       url: "https://funny-vacherin-a055e.netlify.app/",
     },
     {
       titleEn: "Dr. Mohamed",
       titleAr: "د. محمد",
-      descEn: "Medical professional portfolio",
-      descAr: "بورتفوليو طبي احترافي",
+      descEn: "Personal portfolio for a medical professional with clean layout and service sections.",
+      descAr: "بورتفوليو طبي احترافي بتصميم أنيق وأقسام للخدمات.",
+      techEn: "React · CSS Animations · Netlify",
+      techAr: "React · CSS Animations · Netlify",
       category: "Web · Portfolio",
-      gradient: "from-[#0a2540] via-[#1a4f8a] to-[#00c2cb]",
       accent: "#00c2cb",
       url: "https://drmohamedpage.netlify.app/",
     },
     {
       titleEn: "Sneakers Store",
       titleAr: "سنيكرز ستور",
-      descEn: "Urban sneaker e-commerce",
-      descAr: "متجر إلكتروني للأحذية الرياضية",
+      descEn: "Full e-commerce store for a sneaker brand with product pages and cart.",
+      descAr: "متجر إلكتروني متكامل لعلامة أحذية رياضية مع صفحات منتجات وسلة.",
+      techEn: "React · E-Commerce · Vercel",
+      techAr: "React · E-Commerce · Vercel",
       category: "E-Commerce",
-      gradient: "from-[#0f0f0f] via-[#1a1a2e] to-[#e94560]",
       accent: "#e94560",
       url: "https://sneakers-ecommerce-henna.vercel.app/",
     },
     {
       titleEn: "JUBA Store",
       titleAr: "جوبا ستور",
-      descEn: "Fashion brand landing page",
-      descAr: "صفحة هبوط لعلامة أزياء",
+      descEn: "Fashion brand landing page with bold typography and collection showcase.",
+      descAr: "صفحة هبوط لعلامة أزياء بطباعة جريئة وعرض للمجموعات.",
+      techEn: "React · Tailwind CSS · Vercel",
+      techAr: "React · Tailwind CSS · Vercel",
       category: "Web · Fashion",
-      gradient: "from-[#1c1c1c] via-[#3d2b1f] to-[#c9a84c]",
       accent: "#c9a84c",
       url: "https://juba-store.vercel.app/",
     },
     {
       titleEn: "Coffee Corner",
       titleAr: "كوفي كورنر",
-      descEn: "Digital menu for coffee shops",
-      descAr: "قائمة رقمية لمقاهي القهوة",
+      descEn: "Interactive digital menu for coffee shops — elegant and easy to browse.",
+      descAr: "قائمة رقمية تفاعلية للمقاهي — أنيقة وسهلة التصفح.",
+      techEn: "React · Interactive UI · Vercel",
+      techAr: "React · Interactive UI · Vercel",
       category: "Web · Hospitality",
-      gradient: "from-[#2c1810] via-[#5c3a1e] to-[#c8865a]",
       accent: "#c8865a",
       url: "https://coffee-corner-a1zq.vercel.app/",
     },
     {
       titleEn: "Quran Academy",
       titleAr: "أكاديمية القرآن",
-      descEn: "Online Quran learning platform",
-      descAr: "منصة تعليم القرآن الكريم",
+      descEn: "Landing page for an online Quran learning platform with class booking.",
+      descAr: "صفحة هبوط لمنصة تعليم القرآن الكريم مع حجز الحصص.",
+      techEn: "React · Tailwind CSS · Vercel",
+      techAr: "React · Tailwind CSS · Vercel",
       category: "Web · Education",
-      gradient: "from-[#0d2b1d] via-[#1a5c3a] to-[#c9a84c]",
-      accent: "#c9a84c",
+      accent: "#5cb85c",
       url: "https://quran-academy-sooty.vercel.app/",
     },
     {
       titleEn: "Sabora Academy",
       titleAr: "أكاديمية صابورا",
-      descEn: "Learning website landing page",
-      descAr: "صفحة هبوط لمنصة تعليمية",
+      descEn: "EdTech landing page for an online learning platform with course listings.",
+      descAr: "صفحة هبوط لمنصة تعليمية إلكترونية مع عرض الكورسات.",
+      techEn: "React · CSS · Vercel",
+      techAr: "React · CSS · Vercel",
       category: "Web · EdTech",
-      gradient: "from-[#1a0533] via-[#4a1982] to-[#00e5c8]",
       accent: "#00e5c8",
       url: "https://sabora-acadimy.vercel.app/",
     },
     {
       titleEn: "Café Cashier",
       titleAr: "نظام الكاشير",
-      descEn: "Full POS system for coffee shops",
-      descAr: "نظام نقاط بيع متكامل للمقاهي",
+      descEn: "Full POS system for coffee shops — orders, inventory, and reports in one dashboard.",
+      descAr: "نظام نقاط بيع متكامل للمقاهي — طلبات ومخزون وتقارير في لوحة واحدة.",
+      techEn: "Angular · TypeScript · Vercel",
+      techAr: "Angular · TypeScript · Vercel",
       category: "Desktop · SaaS",
-      gradient: "from-[#060610] via-[#0d1b4b] to-[#6c63ff]",
       accent: "#6c63ff",
       url: "https://cahier-angular-qhet.vercel.app/login",
     },
@@ -632,7 +637,7 @@ export function Work() {
           </div>
         </FadeInWhenVisible>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {projects.map((p, i) => (
             <FadeInWhenVisible key={i} delay={i * 0.07}>
               <motion.a
@@ -640,52 +645,67 @@ export function Work() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid={`portfolio-card-${i}`}
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer isolate block"
-                style={{ boxShadow: "0 0 0 1px var(--card-border)" }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className="group block rounded-2xl overflow-hidden cursor-pointer"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  border: "1px solid var(--card-border)",
+                }}
               >
-                {/* live iframe preview with gradient fallback */}
-                <LivePreview url={p.url} gradient={p.gradient} />
+                {/* live preview — iframe fills the top portion */}
+                <div className="relative overflow-hidden" style={{ height: 200 }}>
+                  <LivePreview url={p.url} />
+                  {/* hover overlay with "View Live" */}
+                  <div
+                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ backgroundColor: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
+                  >
+                    <span
+                      className="flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full"
+                      style={{
+                        backgroundColor: p.accent + "22",
+                        color: p.accent,
+                        border: `1px solid ${p.accent}55`,
+                      }}
+                    >
+                      {lang === "en" ? "View Live" : "مشاهدة المشروع"}
+                      {lang === "en" ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                    </span>
+                  </div>
+                </div>
 
-                {/* category chip */}
-                <div className="absolute top-4 start-4">
+                {/* info below the preview — always visible */}
+                <div className="p-4">
+                  {/* category chip */}
                   <span
-                    className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md"
+                    className="inline-block text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3"
                     style={{
-                      backgroundColor: "rgba(0,0,0,0.45)",
+                      backgroundColor: p.accent + "18",
                       color: p.accent,
-                      border: `1px solid ${p.accent}44`,
                     }}
                   >
                     {p.category}
                   </span>
-                </div>
 
-                {/* bottom info */}
-                <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)" }}
-                >
-                  <h3 className="text-white font-bold text-lg leading-tight mb-1">
+                  {/* title */}
+                  <h3 className="font-bold text-base leading-snug mb-1.5" style={{ color: "var(--text)" }}>
                     {lang === "en" ? p.titleEn : p.titleAr}
                   </h3>
-                  <p className="text-white/70 text-xs mb-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+
+                  {/* description */}
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-muted)" }}>
                     {lang === "en" ? p.descEn : p.descAr}
                   </p>
-                  <div
-                    className="inline-flex items-center gap-1.5 text-xs font-bold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
-                    style={{ color: p.accent }}
-                  >
-                    {lang === "en" ? "View Live" : "مشاهدة المشروع"}
-                    {lang === "en" ? <ArrowRight className="w-3 h-3" /> : <ArrowLeft className="w-3 h-3" />}
-                  </div>
-                </div>
 
-                {/* glow ring on hover */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ boxShadow: `inset 0 0 0 1.5px ${p.accent}66` }}
-                />
+                  {/* tech stack */}
+                  <p
+                    className="text-[11px] font-mono font-semibold tracking-wide"
+                    style={{ color: p.accent + "cc" }}
+                  >
+                    {lang === "en" ? p.techEn : p.techAr}
+                  </p>
+                </div>
               </motion.a>
             </FadeInWhenVisible>
           ))}
