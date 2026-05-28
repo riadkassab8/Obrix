@@ -35,6 +35,30 @@ function UIverseBtn({
   );
 }
 
+/* ── UIverse Mail button — Li-Deheng bright-badger-45 star sparkle style ── */
+function MailBtn({ children, href }: { children: React.ReactNode; href: string }) {
+  const StarIcon = ({ size = 12 }: { size?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5Z" />
+    </svg>
+  );
+  return (
+    <motion.a
+      href={href}
+      whileTap={{ scale: 0.96 }}
+      className="mail-btn"
+    >
+      <span className="btn-star"><StarIcon size={13} /></span>
+      <span className="btn-star"><StarIcon size={10} /></span>
+      <span className="btn-star"><StarIcon size={12} /></span>
+      <span className="btn-star"><StarIcon size={13} /></span>
+      <span className="btn-star"><StarIcon size={10} /></span>
+      <span className="btn-star"><StarIcon size={11} /></span>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
+    </motion.a>
+  );
+}
+
 /* ── Floating WhatsApp button ── */
 function FloatingWhatsApp() {
   return (
@@ -879,14 +903,12 @@ export function CTA() {
               {lang === "en" ? "Chat on WhatsApp" : "تواصل عبر واتساب"}
               {lang === "en" ? <ArrowRight className="w-5 h-5" /> : <ArrowLeft className="w-5 h-5" />}
             </UIverseBtn>
-            <a
-              href={GMAIL}
-              className="text-lg font-bold hover:underline transition-colors"
-              style={{ color: "var(--text-muted)" }}
-              data-testid="cta-email"
-            >
-              riadkassab320@gmail.com
-            </a>
+            <MailBtn href={GMAIL}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              {lang === "en" ? "Send me an Email" : "أرسل بريدًا إلكترونيًا"}
+            </MailBtn>
           </div>
         </FadeInWhenVisible>
       </div>
