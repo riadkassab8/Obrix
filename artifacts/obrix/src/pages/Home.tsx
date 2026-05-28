@@ -9,6 +9,51 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const WA_URL = "https://wa.me/201098277229";
+const GMAIL   = "mailto:riadkassab320@gmail.com";
+
+/* ── UIverse animated gradient button ── */
+function UIverseBtn({
+  children,
+  href,
+  fullWidth = false,
+}: {
+  children: React.ReactNode;
+  href: string;
+  fullWidth?: boolean;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileTap={{ scale: 0.96 }}
+      className={`uiverse-btn relative inline-flex items-center justify-center gap-2 rounded-full font-bold text-white overflow-hidden cursor-pointer ${fullWidth ? "w-full py-4 text-lg" : "px-9 py-4 text-lg"}`}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
+/* ── Floating WhatsApp button ── */
+function FloatingWhatsApp() {
+  return (
+    <a
+      href={WA_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+      data-testid="floating-whatsapp"
+      className="wa-float fixed bottom-6 right-6 z-[200] w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+      style={{ backgroundColor: "#25D366" }}
+    >
+      <svg viewBox="0 0 32 32" width="28" height="28" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.002 2.667C8.638 2.667 2.667 8.637 2.667 16c0 2.363.627 4.674 1.818 6.697L2.667 29.333l6.804-1.782A13.268 13.268 0 0 0 16.002 29.333c7.363 0 13.331-5.97 13.331-13.333S23.365 2.667 16.002 2.667Zm0 24.267a11.002 11.002 0 0 1-5.61-1.532l-.401-.238-4.038 1.058 1.079-3.93-.263-.414A10.95 10.95 0 0 1 5.001 16c0-6.075 4.926-11 11.001-11S27.003 9.925 27.003 16s-4.927 11-11.001 11Zm6.03-8.24c-.33-.165-1.952-.963-2.255-1.073-.303-.11-.524-.165-.744.165-.22.33-.854 1.073-1.046 1.293-.193.22-.385.247-.715.082-.33-.165-1.394-.514-2.655-1.638-.981-.875-1.643-1.956-1.836-2.285-.192-.33-.02-.509.145-.673.149-.148.33-.385.495-.578.165-.192.22-.33.33-.55.11-.22.055-.413-.028-.578-.082-.165-.744-1.793-1.02-2.455-.27-.645-.543-.557-.744-.567l-.634-.011c-.22 0-.578.082-.881.413-.303.33-1.155 1.128-1.155 2.753s1.183 3.195 1.348 3.415c.165.22 2.328 3.555 5.642 4.987.789.34 1.404.543 1.883.695.791.251 1.511.216 2.08.131.634-.094 1.952-.798 2.228-1.57.275-.771.275-1.431.192-1.57-.082-.138-.303-.22-.633-.385Z"/>
+      </svg>
+    </a>
+  );
+}
+
 const navLinks = [
   { en: "Work", ar: "أعمالنا", href: "#work" },
   { en: "Services", ar: "خدماتنا", href: "#services" },
@@ -160,12 +205,10 @@ export function Navbar() {
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors">
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
             </button>
-            <a href="#contact">
-              <Button className="bg-[var(--accent1)] hover:bg-[var(--accent1)]/90 text-white rounded-full px-6 transition-transform hover:scale-105">
-                {lang === "en" ? "Start a Project" : "ابدأ مشروعك"}
-                {lang === "en" ? <ArrowRight className="ml-2 w-4 h-4" /> : <ArrowLeft className="mr-2 w-4 h-4" />}
-              </Button>
-            </a>
+            <UIverseBtn href={WA_URL}>
+              {lang === "en" ? "Start a Project" : "ابدأ مشروعك"}
+              {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+            </UIverseBtn>
           </div>
 
           <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -214,11 +257,9 @@ export function Navbar() {
                   {theme === "dark" ? <Sun size={24} style={{ color: "var(--text)" }} /> : <Moon size={24} style={{ color: "var(--text)" }} />}
                 </button>
               </div>
-              <a href="#contact" onClick={closeMenu} className="w-full">
-                <Button className="w-full h-14 bg-[var(--accent1)] hover:bg-[var(--accent1)]/90 text-white rounded-full text-lg">
-                  {lang === "en" ? "Start a Project" : "ابدأ مشروعك"}
-                </Button>
-              </a>
+              <UIverseBtn href={WA_URL} fullWidth>
+                {lang === "en" ? "Start a Project" : "ابدأ مشروعك"}
+              </UIverseBtn>
             </div>
           </motion.div>
         )}
@@ -714,9 +755,10 @@ export function Packages() {
                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> 1 Month Social</li>
                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> Brand Colors</li>
               </ul>
-              <Button className="w-full rounded-full py-6 text-lg hover:scale-105 transition-transform" style={{ backgroundColor: "var(--surface2)", color: "var(--text)" }}>
-                {lang === "en" ? "Get Started →" : "ابدأ الآن ←"}
-              </Button>
+              <UIverseBtn href={WA_URL} fullWidth>
+                {lang === "en" ? "Get Started" : "ابدأ الآن"}
+                {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </UIverseBtn>
             </div>
           </FadeInWhenVisible>
 
@@ -738,9 +780,10 @@ export function Packages() {
                 <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> SEO Strategy</li>
                 <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> Monthly Report</li>
               </ul>
-              <Button className="w-full rounded-full py-6 text-lg bg-[var(--accent1)] text-white hover:bg-[var(--accent1)]/90 hover:scale-105 transition-transform">
-                {lang === "en" ? "Start Growing →" : "ابدأ النمو ←"}
-              </Button>
+              <UIverseBtn href={WA_URL} fullWidth>
+                {lang === "en" ? "Start Growing" : "ابدأ النمو"}
+                {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </UIverseBtn>
             </div>
           </FadeInWhenVisible>
 
@@ -759,9 +802,10 @@ export function Packages() {
                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Priority Support</li>
                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Quarterly Review</li>
               </ul>
-              <Button className="w-full rounded-full py-6 text-lg hover:scale-105 transition-transform" style={{ backgroundColor: "var(--surface2)", color: "var(--text)" }}>
-                {lang === "en" ? "Let's Build →" : "لنبني معًا ←"}
-              </Button>
+              <UIverseBtn href={WA_URL} fullWidth>
+                {lang === "en" ? "Let's Build" : "لنبني معًا"}
+                {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+              </UIverseBtn>
             </div>
           </FadeInWhenVisible>
         </div>
@@ -829,18 +873,19 @@ export function CTA() {
               : "من الفكرة إلى الإطلاق — أوبريكس تتولى كل شيء. لنبدأ الحديث."}
           </p>
           
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="rounded-full px-10 py-8 text-xl font-bold bg-[var(--accent1)] text-white shadow-lg shadow-[var(--accent1)]/30 hover:bg-[var(--accent1)]/90 relative overflow-hidden group">
-                <span className="relative z-10 flex items-center">
-                  {lang === "en" ? "Start a Project" : "ابدأ مشروعك"}
-                  {lang === "en" ? <ArrowRight className="ml-2 w-5 h-5" /> : <ArrowLeft className="mr-2 w-5 h-5" />}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-              </Button>
-            </motion.div>
-            <a href="mailto:hello@obrix.io" className="text-xl font-bold hover:underline" style={{ color: "var(--text)" }}>
-              hello@obrix.io
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+            <UIverseBtn href={WA_URL}>
+              <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor"><path d="M16.002 2.667C8.638 2.667 2.667 8.637 2.667 16c0 2.363.627 4.674 1.818 6.697L2.667 29.333l6.804-1.782A13.268 13.268 0 0 0 16.002 29.333c7.363 0 13.331-5.97 13.331-13.333S23.365 2.667 16.002 2.667Zm6.03 18.093c-.33-.165-1.952-.963-2.255-1.073-.303-.11-.524-.165-.744.165-.22.33-.854 1.073-1.046 1.293-.193.22-.385.247-.715.082-.33-.165-1.394-.514-2.655-1.638-.981-.875-1.643-1.956-1.836-2.285-.192-.33-.02-.509.145-.673.149-.148.33-.385.495-.578.165-.192.22-.33.33-.55.11-.22.055-.413-.028-.578-.082-.165-.744-1.793-1.02-2.455-.27-.645-.543-.557-.744-.567l-.634-.011c-.22 0-.578.082-.881.413-.303.33-1.155 1.128-1.155 2.753s1.183 3.195 1.348 3.415c.165.22 2.328 3.555 5.642 4.987.789.34 1.404.543 1.883.695.791.251 1.511.216 2.08.131.634-.094 1.952-.798 2.228-1.57.275-.771.275-1.431.192-1.57-.082-.138-.303-.22-.633-.385Z"/></svg>
+              {lang === "en" ? "Chat on WhatsApp" : "تواصل عبر واتساب"}
+              {lang === "en" ? <ArrowRight className="w-5 h-5" /> : <ArrowLeft className="w-5 h-5" />}
+            </UIverseBtn>
+            <a
+              href={GMAIL}
+              className="text-lg font-bold hover:underline transition-colors"
+              style={{ color: "var(--text-muted)" }}
+              data-testid="cta-email"
+            >
+              riadkassab320@gmail.com
             </a>
           </div>
         </FadeInWhenVisible>
@@ -885,8 +930,8 @@ export function Footer() {
               <div className="w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer hover:bg-[var(--accent1)] hover:text-white transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>LI</div>
               <div className="w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer hover:bg-[var(--accent1)] hover:text-white transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>Be</div>
             </div>
-            <a href="mailto:hello@obrix.io" className="font-bold text-lg hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
-              hello@obrix.io
+            <a href={GMAIL} className="font-bold text-lg hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
+              riadkassab320@gmail.com
             </a>
           </div>
         </div>
@@ -914,6 +959,7 @@ export default function Home() {
       <WhyObrix />
       <CTA />
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
