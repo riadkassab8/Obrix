@@ -485,6 +485,53 @@ export function Services() {
   );
 }
 
+const IFRAME_W = 1280;
+const IFRAME_H = 960;
+
+function LivePreview({ url, gradient }: { url: string; gradient: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.22);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const obs = new ResizeObserver((entries) => {
+      for (const e of entries) {
+        setScale(e.contentRect.width / IFRAME_W);
+      }
+    });
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
+      {/* gradient always renders as fallback */}
+      <div className={`absolute inset-0 bg-gradient-to-b ${gradient}`} />
+      {/* scaled iframe on top — pointer-events:none so clicks hit the anchor */}
+      <iframe
+        src={url}
+        width={IFRAME_W}
+        height={IFRAME_H}
+        scrolling="no"
+        loading="lazy"
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
+          pointerEvents: "none",
+          border: "none",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          display: "block",
+        }}
+        sandbox="allow-same-origin allow-scripts allow-forms"
+      />
+      {/* subtle tint so the iframe blends with dark card style */}
+      <div className="absolute inset-0 bg-black/25" />
+    </div>
+  );
+}
+
 export function Work() {
   const { lang } = useLang();
   
@@ -598,14 +645,8 @@ export function Work() {
                 className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer isolate block"
                 style={{ boxShadow: "0 0 0 1px var(--card-border)" }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-b ${p.gradient} transition-opacity duration-500`} />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500" />
-
-                {/* noise texture */}
-                <div className="absolute inset-0 opacity-20" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                  backgroundSize: "200px 200px"
-                }} />
+                {/* live iframe preview with gradient fallback */}
+                <LivePreview url={p.url} gradient={p.gradient} />
 
                 {/* category chip */}
                 <div className="absolute top-4 start-4">
