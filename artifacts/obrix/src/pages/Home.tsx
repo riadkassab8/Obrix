@@ -35,26 +35,53 @@ function UIverseBtn({
   );
 }
 
-/* ── UIverse Mail button — Li-Deheng bright-badger-45 star sparkle style ── */
-function MailBtn({ children, href }: { children: React.ReactNode; href: string }) {
-  const StarIcon = ({ size = 12 }: { size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5Z" />
+/* ── UIverse Mail button — Li-Deheng bright-badger-45 swap animation ── */
+function MailBtn({ href }: { href: string }) {
+  const { lang } = useLang();
+  const [hovered, setHovered] = useState(false);
+
+  const EnvelopeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
     </svg>
   );
+
   return (
     <motion.a
       href={href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       whileTap={{ scale: 0.96 }}
       className="mail-btn"
     >
-      <span className="btn-star"><StarIcon size={13} /></span>
-      <span className="btn-star"><StarIcon size={10} /></span>
-      <span className="btn-star"><StarIcon size={12} /></span>
-      <span className="btn-star"><StarIcon size={13} /></span>
-      <span className="btn-star"><StarIcon size={10} /></span>
-      <span className="btn-star"><StarIcon size={11} /></span>
-      <span className="relative z-10 flex items-center gap-2">{children}</span>
+      {/* Default label — slides up & out on hover */}
+      <motion.span
+        animate={{ y: hovered ? "-110%" : "0%", opacity: hovered ? 0 : 1 }}
+        transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+        className="absolute flex items-center gap-2 whitespace-nowrap"
+      >
+        <EnvelopeIcon />
+        {lang === "en" ? "Send an Email" : "أرسل بريدًا"}
+      </motion.span>
+
+      {/* Email address — slides up from below on hover */}
+      <motion.span
+        animate={{ y: hovered ? "0%" : "110%", opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+        className="absolute flex items-center gap-2 whitespace-nowrap"
+        style={{ fontSize: "0.92rem" }}
+      >
+        <EnvelopeIcon />
+        riadkassab320@gmail.com
+      </motion.span>
+
+      {/* Spacer to hold button width */}
+      <span className="invisible flex items-center gap-2 whitespace-nowrap" aria-hidden>
+        <EnvelopeIcon />
+        riadkassab320@gmail.com
+      </span>
     </motion.a>
   );
 }
@@ -903,12 +930,7 @@ export function CTA() {
               {lang === "en" ? "Chat on WhatsApp" : "تواصل عبر واتساب"}
               {lang === "en" ? <ArrowRight className="w-5 h-5" /> : <ArrowLeft className="w-5 h-5" />}
             </UIverseBtn>
-            <MailBtn href={GMAIL}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-              </svg>
-              {lang === "en" ? "Send me an Email" : "أرسل بريدًا إلكترونيًا"}
-            </MailBtn>
+            <MailBtn href={GMAIL} />
           </div>
         </FadeInWhenVisible>
       </div>
