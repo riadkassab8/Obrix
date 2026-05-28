@@ -315,7 +315,7 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-4">
             <button onClick={toggleLang} className="text-sm font-bold hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
-              {lang === "en" ? "عر | EN" : "EN | عر"}
+              {lang === "en" ? "عربي | EN" : "EN | عربي"}
             </button>
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors">
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
