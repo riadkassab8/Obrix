@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "build": "npm run typecheck; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; vite build",
+    "build": "node scripts/build.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
