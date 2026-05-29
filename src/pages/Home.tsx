@@ -308,20 +308,23 @@ export function Navbar() {
               </svg>
             </motion.div>
             
-            {/* الكلمة الكاملة orbix تطلع من جوا الشكل براحة */}
+            {/* الكلمة الكاملة orbix تطلع من جوا الشكل السداسي */}
             <motion.span
-              initial={{ x: -60, opacity: 0, scale: 0.5 }}
-              animate={{ x: 0, opacity: 1, scale: 1 }}
+              animate={{ 
+                x: [-50, 0, 0, 0, -50],
+                opacity: [0, 1, 1, 1, 0],
+                scale: [0.3, 1, 1, 1, 0.3]
+              }}
               transition={{ 
-                duration: 1.4,
-                delay: 0.5,
-                ease: [0.25, 0.46, 0.45, 0.94],
-                opacity: { duration: 1.2, delay: 0.6 }
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                times: [0, 0.25, 0.5, 0.7, 1]
               }}
               className="font-extrabold text-3xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]"
               style={{ color: "var(--text)" }}
             >
-              Obrix
+              orbix
             </motion.span>
           </a>
 
@@ -608,7 +611,7 @@ export function Services() {
       title: lang === "en" ? "Digital Marketing" : "التسويق الرقمي",
       icon: <TrendingUp />,
       color: "var(--accent2)",
-      tags: ["Instagram", "TikTok", "Google"]
+      tags: ["Instagram", "TikTok", "Facebook"]
     },
     {
       title: lang === "en" ? "Desktop Apps" : "تطبيقات سطح المكتب",
