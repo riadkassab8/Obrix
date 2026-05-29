@@ -290,59 +290,39 @@ export function Navbar() {
         }}
       >
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 group relative">
-            {/* الشكل السداسي الدوار */}
+          <a href="#" className="flex items-center gap-3 group relative overflow-visible">
+            {/* الشكل السداسي الدوار - SVG عشان يظهر صح */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="w-12 h-12 relative flex items-center justify-center"
-              style={{ 
-                clipPath: "polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)",
-                border: "2px solid",
-                borderColor: "var(--accent1)",
-                backgroundColor: "var(--accent1)15"
-              }}
+              className="w-12 h-12 relative flex-shrink-0"
             >
-              {/* النص يظهر من الداخل */}
-              <motion.span
-                initial={{ scale: 0, opacity: 0, rotate: -180 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                transition={{ 
-                  duration: 1.2, 
-                  delay: 0.3,
-                  ease: [0.34, 1.56, 0.64, 1],
-                  scale: {
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 10
-                  }
-                }}
-                className="font-extrabold text-2xl tracking-tighter absolute"
-                style={{ color: "var(--text)" }}
-              >
-                O
-              </motion.span>
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <polygon
+                  points="50,5 90,25 90,75 50,95 10,75 10,25"
+                  fill="none"
+                  stroke="var(--accent1)"
+                  strokeWidth="3"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </motion.div>
             
-            {/* باقي النص يظهر بتتابع */}
-            <div className="flex">
-              {["B", "R", "I", "X"].map((letter, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.5 + (i * 0.1),
-                    ease: [0.34, 1.56, 0.64, 1]
-                  }}
-                  className="font-extrabold text-2xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]"
-                  style={{ color: "var(--text)" }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </div>
+            {/* الكلمة الكاملة orbix تطلع من جوا الشكل براحة */}
+            <motion.span
+              initial={{ x: -60, opacity: 0, scale: 0.5 }}
+              animate={{ x: 0, opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 1.4,
+                delay: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94],
+                opacity: { duration: 1.2, delay: 0.6 }
+              }}
+              className="font-extrabold text-3xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]"
+              style={{ color: "var(--text)" }}
+            >
+              Obrix
+            </motion.span>
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -467,7 +447,7 @@ export function Hero() {
       />
       
       <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-extrabold tracking-tighter opacity-5 pointer-events-none select-none blur-[4px]" style={{ color: "var(--text)" }}>
-        OBRIX
+        Obrix
       </div>
 
       <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center flex-1 justify-center">
@@ -493,7 +473,7 @@ export function Hero() {
           style={{ color: "var(--text-muted)" }}
         >
           {lang === "en" 
-            ? "From stunning websites to viral campaigns — Obrix turns your vision into a digital experience people remember." 
+            ? "From stunning websites to viral campaigns — orbix turns your vision into a digital experience people remember." 
             : "من المواقع المذهلة إلى الحملات الفيروسية — أوبريكس تحول رؤيتك إلى تجربة رقمية لا تُنسى."}
         </motion.p>
         
@@ -557,7 +537,7 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <FadeInWhenVisible>
             <div className="inline-block px-4 py-1.5 rounded-full mb-6 text-sm font-semibold border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}>
-              {lang === "en" ? "✦ About Obrix" : "✦ عن أوبريكس"}
+              {lang === "en" ? "✦ About orbix" : "✦ عن أوبريكس"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: "var(--text)" }}>
               {lang === "en" ? "We're not just another agency." : "نحن لسنا مجرد وكالة أخرى."}
@@ -969,7 +949,7 @@ export function Packages() {
   );
 }
 
-export function WhyObrix() {
+export function WhyOrbix() {
   const { lang } = useLang();
   
   const chips = [
@@ -986,7 +966,7 @@ export function WhyObrix() {
       <div className="container mx-auto px-6">
         <FadeInWhenVisible>
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center" style={{ color: "var(--text)" }}>
-            {lang === "en" ? "Why Obrix?" : "لماذا أوبريكس؟"}
+            {lang === "en" ? "Why orbix?" : "لماذا أوبريكس؟"}
           </h2>
           <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             {chips.map((chip, i) => (
@@ -1024,7 +1004,7 @@ export function CTA() {
           </h2>
           <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto" style={{ color: "var(--text-muted)" }}>
             {lang === "en" 
-              ? "From idea to launch — Obrix handles everything. Let's start a conversation."
+              ? "From idea to launch — orbix handles everything. Let's start a conversation."
               : "من الفكرة إلى الإطلاق — أوبريكس تتولى كل شيء. لنبدأ الحديث."}
           </p>
           
@@ -1046,24 +1026,24 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 mb-16">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              {/* الشكل السداسي الدوار */}
+            <div className="flex items-center gap-3 mb-4 overflow-visible">
+              {/* الشكل السداسي الدوار - SVG */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="w-10 h-10 relative flex items-center justify-center flex-shrink-0"
-                style={{ 
-                  clipPath: "polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)",
-                  border: "2px solid",
-                  borderColor: "var(--accent1)",
-                  backgroundColor: "var(--accent1)15"
-                }}
+                className="w-11 h-11 relative flex-shrink-0"
               >
-                <span className="font-extrabold text-xl tracking-tighter" style={{ color: "var(--text)" }}>
-                  O
-                </span>
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <polygon
+                    points="50,5 90,25 90,75 50,95 10,75 10,25"
+                    fill="none"
+                    stroke="var(--accent1)"
+                    strokeWidth="3"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </motion.div>
-              <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>BRIX</span>
+              <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
             </div>
             <p className="text-lg font-medium" style={{ color: "var(--text-muted)" }}>
               {lang === "en" ? "Where design meets intelligence." : "حيث يلتقي التصميم بالذكاء."}
@@ -1099,7 +1079,7 @@ export function Footer() {
         </div>
         
         <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
-          <p>© 2026 Obrix. All rights reserved.</p>
+          <p>© 2026 orbix. All rights reserved.</p>
           <p>{lang === "en" ? "Crafted with obsession." : "صُنع بشغف."}</p>
         </div>
       </div>
@@ -1119,7 +1099,7 @@ export default function Home() {
       <Services />
       <Work />
       <Packages />
-      <WhyObrix />
+      <WhyOrbix />
       <CTA />
       <Footer />
       <FloatingWhatsApp />
