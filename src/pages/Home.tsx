@@ -290,14 +290,59 @@ export function Navbar() {
         }}
       >
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 group">
-            <span className="font-extrabold text-2xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]" style={{ color: "var(--text)" }}>OBRIX</span>
+          <a href="#" className="flex items-center gap-2 group relative">
+            {/* الشكل السداسي الدوار */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="w-6 h-6 rounded-full border-2 border-dashed"
-              style={{ borderColor: "var(--accent1)" }}
-            />
+              className="w-12 h-12 relative flex items-center justify-center"
+              style={{ 
+                clipPath: "polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)",
+                border: "2px solid",
+                borderColor: "var(--accent1)",
+                backgroundColor: "var(--accent1)15"
+              }}
+            >
+              {/* النص يظهر من الداخل */}
+              <motion.span
+                initial={{ scale: 0, opacity: 0, rotate: -180 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                transition={{ 
+                  duration: 1.2, 
+                  delay: 0.3,
+                  ease: [0.34, 1.56, 0.64, 1],
+                  scale: {
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 10
+                  }
+                }}
+                className="font-extrabold text-2xl tracking-tighter absolute"
+                style={{ color: "var(--text)" }}
+              >
+                O
+              </motion.span>
+            </motion.div>
+            
+            {/* باقي النص يظهر بتتابع */}
+            <div className="flex">
+              {["B", "R", "I", "X"].map((letter, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: 0.5 + (i * 0.1),
+                    ease: [0.34, 1.56, 0.64, 1]
+                  }}
+                  className="font-extrabold text-2xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]"
+                  style={{ color: "var(--text)" }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </div>
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -1001,7 +1046,25 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 mb-16">
           <div>
-            <div className="font-extrabold text-3xl mb-4 tracking-tighter" style={{ color: "var(--text)" }}>OBRIX</div>
+            <div className="flex items-center gap-2 mb-4">
+              {/* الشكل السداسي الدوار */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="w-10 h-10 relative flex items-center justify-center flex-shrink-0"
+                style={{ 
+                  clipPath: "polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)",
+                  border: "2px solid",
+                  borderColor: "var(--accent1)",
+                  backgroundColor: "var(--accent1)15"
+                }}
+              >
+                <span className="font-extrabold text-xl tracking-tighter" style={{ color: "var(--text)" }}>
+                  O
+                </span>
+              </motion.div>
+              <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>BRIX</span>
+            </div>
             <p className="text-lg font-medium" style={{ color: "var(--text-muted)" }}>
               {lang === "en" ? "Where design meets intelligence." : "حيث يلتقي التصميم بالذكاء."}
             </p>
