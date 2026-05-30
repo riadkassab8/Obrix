@@ -363,38 +363,65 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-[60] flex flex-col pt-24 px-6 pb-6"
+            className="fixed inset-0 z-[60] flex flex-col px-6 pb-6"
             style={{ backgroundColor: "var(--bg)" }}
           >
-            <button
-              className="absolute top-6 right-6 p-2"
-              onClick={closeMenu}
-            >
-              <X size={24} style={{ color: "var(--text)" }} />
-            </button>
-            <div className="flex flex-col gap-6 text-2xl font-bold mt-12">
+            {/* Header with Logo and Close Button */}
+            <div className="flex items-center justify-between pt-6 pb-8 border-b" style={{ borderColor: "var(--border)" }}>
+              <div className="flex items-center gap-3">
+                {/* الشكل السداسي الدوار */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  className="w-10 h-10 relative flex-shrink-0"
+                >
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <polygon
+                      points="50,5 90,25 90,75 50,95 10,75 10,25"
+                      fill="none"
+                      stroke="var(--accent1)"
+                      strokeWidth="3"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
+                <span className="font-extrabold text-2xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
+              </div>
+              
+              <button
+                className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors"
+                onClick={closeMenu}
+              >
+                <X size={24} style={{ color: "var(--text)" }} />
+              </button>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="flex flex-col gap-6 text-2xl font-bold mt-12 flex-1">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.en}
                   href={link.href}
                   onClick={closeMenu}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: lang === "en" ? -20 : 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   style={{ color: "var(--text)" }}
-                  className="hover:text-[var(--accent1)] transition-colors"
+                  className="hover:text-[var(--accent1)] transition-colors py-2"
                 >
                   {lang === "en" ? link.en : link.ar}
                 </motion.a>
               ))}
             </div>
-            <div className="mt-auto flex flex-col gap-6">
+
+            {/* Footer Actions */}
+            <div className="flex flex-col gap-6 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
               <div className="flex items-center justify-between">
-                <button onClick={toggleLang} className="text-lg font-bold" style={{ color: "var(--text)" }}>
-                  {lang === "en" ? "Switch to Arabic" : "Switch to English"}
+                <button onClick={toggleLang} className="text-base font-bold hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
+                  {lang === "en" ? "التبديل للعربية" : "Switch to English"}
                 </button>
-                <button onClick={toggleTheme} className="p-4 rounded-full" style={{ backgroundColor: "var(--surface)" }}>
-                  {theme === "dark" ? <Sun size={24} style={{ color: "var(--text)" }} /> : <Moon size={24} style={{ color: "var(--text)" }} />}
+                <button onClick={toggleTheme} className="p-3 rounded-full hover:bg-[var(--surface2)] transition-colors" style={{ backgroundColor: "var(--surface)" }}>
+                  {theme === "dark" ? <Sun size={20} style={{ color: "var(--text)" }} /> : <Moon size={20} style={{ color: "var(--text)" }} />}
                 </button>
               </div>
               <WABtn href={WA_URL} fullWidth />
@@ -710,14 +737,34 @@ function LivePreview({ url }: { url: string }) {
 
 export function Work() {
   const { lang } = useLang();
+  const [activeFilter, setActiveFilter] = useState("All");
   
   const projects = [
+    {
+      titleEn: "Creative Portfolio",
+      titleAr: "بورتفوليو إبداعي",
+      descEn: "Modern creative portfolio showcasing design work with stunning animations and interactive elements.",
+      descAr: "بورتفوليو إبداعي حديث يعرض الأعمال التصميمية بأنيميشن مذهل وعناصر تفاعلية.",
+      tags: ["React", "Framer Motion", "Portfolio", "Netlify"],
+      category: "Portfolio",
+      url: "https://darling-scone-768716.netlify.app/",
+    },
+    {
+      titleEn: "Professional Portfolio",
+      titleAr: "بورتفوليو احترافي",
+      descEn: "Clean and professional portfolio website with elegant design and smooth user experience.",
+      descAr: "موقع بورتفوليو احترافي بتصميم أنيق وتجربة مستخدم سلسة.",
+      tags: ["React", "Next.js", "Portfolio", "Vercel"],
+      category: "Portfolio",
+      url: "https://new-portfolio-site-h2gw.vercel.app/",
+    },
     {
       titleEn: "Vacherin Coffee",
       titleAr: "فاشيران كوفي",
       descEn: "High-end coffee brand store with rich visuals and a smooth shopping experience.",
       descAr: "متجر علامة قهوة فاخرة بتصميم راقٍ وتجربة تسوق سلسة.",
       tags: ["React", "Tailwind CSS", "E-Commerce", "Netlify"],
+      category: "E-Commerce",
       url: "https://funny-vacherin-a055e.netlify.app/",
     },
     {
@@ -726,6 +773,7 @@ export function Work() {
       descEn: "Personal portfolio for a medical professional with clean layout and service sections.",
       descAr: "بورتفوليو طبي احترافي بتصميم أنيق وأقسام للخدمات.",
       tags: ["React", "CSS Animations", "Portfolio", "Netlify"],
+      category: "Portfolio",
       url: "https://drmohamedpage.netlify.app/",
     },
     {
@@ -734,6 +782,7 @@ export function Work() {
       descEn: "Full e-commerce store for a sneaker brand with product pages and cart.",
       descAr: "متجر إلكتروني متكامل لعلامة أحذية رياضية مع صفحات منتجات وسلة.",
       tags: ["React", "E-Commerce", "Fashion", "Responsive"],
+      categories: ["E-Commerce", "Dashboard"],
       url: "https://sneakers-ecommerce-henna.vercel.app/",
     },
     {
@@ -742,6 +791,7 @@ export function Work() {
       descEn: "Luxury fashion and footwear e-commerce platform with elegant design and seamless shopping experience.",
       descAr: "منصة تجارة إلكترونية للأزياء والأحذية بتصميم أنيق وتجربة تسوق سلسة.",
       tags: ["React", "E-Commerce", "Fashion", "Responsive"],
+      category: "Landing",
       url: "https://juba-store.vercel.app/",
     },
     {
@@ -750,6 +800,7 @@ export function Work() {
       descEn: "Modern coffee shop website with elegant design and smooth animations.",
       descAr: "موقع مقهى عصري بتصميم أنيق وأنيميشن سلس.",
       tags: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
+      category: "Landing",
       url: "https://coffee-corner-a1zq.vercel.app/",
     },
     {
@@ -758,6 +809,7 @@ export function Work() {
       descEn: "Islamic learning platform with Quran recitation, lessons, and educational resources.",
       descAr: "منصة تعليم إسلامية لتحفيظ القرآن والدروس والمحتوى التعليمي.",
       tags: ["React", "Next.js", "Tailwind CSS", "Islamic Content"],
+      category: "Education",
       url: "https://quran-academy-sooty.vercel.app/",
     },
     {
@@ -766,6 +818,7 @@ export function Work() {
       descEn: "Modern educational academy platform with courses, student management, and learning resources.",
       descAr: "منصة أكاديمية تعليمية حديثة مع كورسات وإدارة طلاب ومحتوى تعليمي.",
       tags: ["React", "Next.js", "Education", "LMS"],
+      category: "Education",
       url: "https://sabora-acadimy.vercel.app/",
     },
     {
@@ -774,9 +827,23 @@ export function Work() {
       descEn: "Complete dashboard system with advanced features, data visualization, analytics, and comprehensive admin panel.",
       descAr: "نظام لوحة تحكم متكامل مع ميزات متقدمة وتحليلات ولوحة إدارة شاملة.",
       tags: ["Angular", "TypeScript", "Dashboard", "Charts"],
+      categories: ["E-Commerce", "Dashboard"],
       url: "https://cahier-angular-qhet.vercel.app/login",
     },
   ];
+
+  const filters = [
+    { en: "All", ar: "الكل", value: "All" },
+    { en: "Portfolio", ar: "بورتفوليو", value: "Portfolio" },
+    { en: "E-Commerce", ar: "متاجر إلكترونية", value: "E-Commerce" },
+    { en: "Landing", ar: "صفحات هبوط", value: "Landing" },
+    { en: "Education", ar: "تعليمية", value: "Education" },
+    { en: "Dashboard", ar: "لوحات تحكم", value: "Dashboard" },
+  ];
+
+  const filteredProjects = activeFilter === "All" 
+    ? projects 
+    : projects.filter((p) => (p.categories ?? [p.category]).includes(activeFilter));
 
   return (
     <section className="py-32" id="work">
@@ -786,14 +853,42 @@ export function Work() {
             <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text)" }}>
               {lang === "en" ? "Selected Work" : "أبرز أعمالنا"}
             </h2>
-            <p className="text-xl" style={{ color: "var(--text-muted)" }}>
+            <p className="text-xl mb-8" style={{ color: "var(--text-muted)" }}>
               {lang === "en" ? "A glimpse of what we've shipped." : "لمحة مما أنجزناه."}
             </p>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap gap-3 justify-center">
+              {filters.map((filter) => (
+                <motion.button
+                  key={filter.value}
+                  onClick={() => setActiveFilter(filter.value)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 py-2.5 rounded-full font-semibold text-sm transition-all"
+                  style={{
+                    backgroundColor: activeFilter === filter.value ? "var(--accent1)" : "var(--surface)",
+                    color: activeFilter === filter.value ? "#fff" : "var(--text)",
+                    border: `2px solid ${activeFilter === filter.value ? "var(--accent1)" : "var(--border)"}`,
+                  }}
+                >
+                  {lang === "en" ? filter.en : filter.ar}
+                </motion.button>
+              ))}
+            </div>
           </div>
         </FadeInWhenVisible>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p, i) => (
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={activeFilter}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+          {filteredProjects.map((p, i) => (
             <FadeInWhenVisible key={i} delay={i * 0.07}>
               <motion.a
                 href={p.url}
@@ -855,7 +950,8 @@ export function Work() {
               </motion.a>
             </FadeInWhenVisible>
           ))}
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -884,14 +980,14 @@ export function Packages() {
             <div className="p-8 rounded-3xl border" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
               <div className="mb-8">
                 <span className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>✦ {lang === "en" ? "Starter" : "البداية"}</span>
-                <h3 className="text-3xl font-bold mt-2" style={{ color: "var(--text)" }}>Launch</h3>
+                <h3 className="text-3xl font-bold mt-2" style={{ color: "var(--text)" }}>{lang === "en" ? "Launch" : "الانطلاق"}</h3>
               </div>
               <ul className="space-y-4 mb-8" style={{ color: "var(--text)" }}>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> 5-Page Website</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> Mobile Responsive</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> Basic SEO</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> 1 Month Social</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> Brand Colors</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "5-Page Website" : "موقع 5 صفحات"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Mobile Responsive" : "متجاوب مع الجوال"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Basic SEO" : "تحسين محركات البحث"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "1 Month Social" : "شهر تسويق رقمي"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Brand Colors" : "ألوان العلامة التجارية"}</li>
               </ul>
               <UIverseBtn href={WA_URL} fullWidth>
                 {lang === "en" ? "Get Started" : "ابدأ الآن"}
@@ -908,15 +1004,15 @@ export function Packages() {
               </div>
               <div className="mb-8">
                 <span className="text-sm font-bold uppercase tracking-wider text-[var(--accent1)]">✦ {lang === "en" ? "Growth" : "النمو"}</span>
-                <h3 className="text-4xl font-bold mt-2" style={{ color: "var(--text)" }}>Scale</h3>
+                <h3 className="text-4xl font-bold mt-2" style={{ color: "var(--text)" }}>{lang === "en" ? "Scale" : "التوسع"}</h3>
               </div>
               <ul className="space-y-4 mb-8 font-medium" style={{ color: "var(--text)" }}>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> Custom Web App</li>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> Full Branding</li>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> 3 Months Social</li>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> Ad Campaign</li>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> SEO Strategy</li>
-                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> Monthly Report</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Custom Web App" : "تطبيق ويب مخصص"}</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Full Branding" : "هوية تجارية كاملة"}</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "3 Months Social" : "3 أشهر تسويق رقمي"}</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Ad Campaign" : "حملة إعلانية"}</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "SEO Strategy" : "استراتيجية SEO"}</li>
+                <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[var(--accent1)]"/> {lang === "en" ? "Monthly Report" : "تقرير شهري"}</li>
               </ul>
               <UIverseBtn href={WA_URL} fullWidth>
                 {lang === "en" ? "Start Growing" : "ابدأ النمو"}
@@ -929,16 +1025,16 @@ export function Packages() {
           <FadeInWhenVisible delay={0.3}>
             <div className="p-8 rounded-3xl border" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
               <div className="mb-8">
-                <span className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>◆ {lang === "en" ? "Premium" : "الاستوديو"}</span>
-                <h3 className="text-3xl font-bold mt-2" style={{ color: "var(--text)" }}>Studio</h3>
+                <span className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>◆ {lang === "en" ? "Premium" : "المميز"}</span>
+                <h3 className="text-3xl font-bold mt-2" style={{ color: "var(--text)" }}>{lang === "en" ? "Studio" : "الاستوديو"}</h3>
               </div>
               <ul className="space-y-4 mb-8" style={{ color: "var(--text)" }}>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Everything in Growth</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Desktop App</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Full Marketing Funnel</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Dedicated Manager</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Priority Support</li>
-                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> Quarterly Review</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Everything in Growth" : "كل ما في باقة النمو"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Desktop App" : "تطبيق سطح المكتب"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Full Marketing Funnel" : "قمع تسويقي متكامل"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Dedicated Manager" : "مدير حساب مخصص"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Priority Support" : "دعم فني مميز"}</li>
+                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[var(--accent3)]"/> {lang === "en" ? "Quarterly Review" : "مراجعة ربع سنوية"}</li>
               </ul>
               <UIverseBtn href={WA_URL} fullWidth>
                 {lang === "en" ? "Let's Build" : "لنبني معًا"}
@@ -1082,7 +1178,11 @@ export function Footer() {
         </div>
         
         <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
-          <p>© 2026 orbix. All rights reserved.</p>
+          <p>
+            {lang === "en"
+              ? "© 2026 orbix. Built by Eng/Riadkassab. All rights reserved."
+              : "© 2026 orbix. تصميم وتطوير Eng/Riadkassab. جميع الحقوق محفوظة."}
+          </p>
           <p>{lang === "en" ? "Crafted with obsession." : "صُنع بشغف."}</p>
         </div>
       </div>
