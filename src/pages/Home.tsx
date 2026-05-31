@@ -741,15 +741,6 @@ export function Work() {
   
   const projects = [
     {
-      titleEn: "Creative Portfolio",
-      titleAr: "بورتفوليو إبداعي",
-      descEn: "Modern creative portfolio showcasing design work with stunning animations and interactive elements.",
-      descAr: "بورتفوليو إبداعي حديث يعرض الأعمال التصميمية بأنيميشن مذهل وعناصر تفاعلية.",
-      tags: ["React", "Framer Motion", "Portfolio", "Netlify"],
-      category: "Portfolio",
-      url: "https://darling-scone-768716.netlify.app/",
-    },
-    {
       titleEn: "Professional Portfolio",
       titleAr: "بورتفوليو احترافي",
       descEn: "Clean and professional portfolio website with elegant design and smooth user experience.",
@@ -759,22 +750,31 @@ export function Work() {
       url: "https://new-portfolio-site-h2gw.vercel.app/",
     },
     {
-      titleEn: "Vacherin Coffee",
-      titleAr: "فاشيران كوفي",
-      descEn: "High-end coffee brand store with rich visuals and a smooth shopping experience.",
-      descAr: "متجر علامة قهوة فاخرة بتصميم راقٍ وتجربة تسوق سلسة.",
-      tags: ["React", "Tailwind CSS", "E-Commerce", "Netlify"],
+      titleEn: "Moaz Sigma",
+      titleAr: "معز سيجما",
+      descEn: "Professional portfolio website showcasing skills and projects with modern design.",
+      descAr: "موقع بورتفوليو احترافي يعرض المهارات والمشاريع بتصميم عصري.",
+      tags: ["React", "Portfolio", "Vercel"],
+      category: "Portfolio",
+      url: "https://moaz-sigma.vercel.app/",
+    },
+    {
+      titleEn: "Eldod E-Commerce",
+      titleAr: "الدود للتجارة الإلكترونية",
+      descEn: "Full-featured e-commerce platform with product catalog and shopping cart.",
+      descAr: "منصة تجارة إلكترونية متكاملة مع كتالوج منتجات وسلة تسوق.",
+      tags: ["React", "Tailwind CSS", "E-Commerce", "Vercel"],
       category: "E-Commerce",
-      url: "https://funny-vacherin-a055e.netlify.app/",
+      url: "https://eldod-ecommerce-wind.vercel.app/",
     },
     {
       titleEn: "Dr. Mohamed",
       titleAr: "د. محمد",
       descEn: "Personal portfolio for a medical professional with clean layout and service sections.",
       descAr: "بورتفوليو طبي احترافي بتصميم أنيق وأقسام للخدمات.",
-      tags: ["React", "CSS Animations", "Portfolio", "Netlify"],
+      tags: ["React", "CSS Animations", "Portfolio", "Vercel"],
       category: "Portfolio",
-      url: "https://drmohamedpage.netlify.app/",
+      url: "https://dr-mohamed-page.vercel.app/",
     },
     {
       titleEn: "Sneakers Store",
@@ -804,6 +804,33 @@ export function Work() {
       url: "https://coffee-corner-a1zq.vercel.app/",
     },
     {
+      titleEn: "Same Menu Site",
+      titleAr: "موقع القائمة",
+      descEn: "Restaurant menu website with elegant design and easy navigation.",
+      descAr: "موقع قائمة مطعم بتصميم أنيق وتصفح سهل.",
+      tags: ["React", "Restaurant", "Vercel"],
+      category: "Landing",
+      url: "https://new-same-menu-site.vercel.app/",
+    },
+    {
+      titleEn: "Coffee Brand M",
+      titleAr: "علامة قهوة M",
+      descEn: "Premium coffee brand website with sophisticated design and product showcase.",
+      descAr: "موقع علامة قهوة فاخرة بتصميم راقٍ وعرض منتجات.",
+      tags: ["React", "Coffee", "Vercel"],
+      category: "Landing",
+      url: "https://coffe-brand-m-salary.vercel.app/",
+    },
+    {
+      titleEn: "Coffee Low Budget",
+      titleAr: "قهوة ميزانية منخفضة",
+      descEn: "Budget-friendly coffee shop website with clean design and essential features.",
+      descAr: "موقع مقهى بتصميم بسيط وميزات أساسية.",
+      tags: ["React", "Coffee", "Vercel"],
+      category: "Landing",
+      url: "https://coffe-low-budget.vercel.app/",
+    },
+    {
       titleEn: "Quran Academy",
       titleAr: "أكاديمية القرآن",
       descEn: "Islamic learning platform with Quran recitation, lessons, and educational resources.",
@@ -819,7 +846,7 @@ export function Work() {
       descAr: "منصة أكاديمية تعليمية حديثة مع كورسات وإدارة طلاب ومحتوى تعليمي.",
       tags: ["React", "Next.js", "Education", "LMS"],
       category: "Education",
-      url: "https://sabora-acadimy.vercel.app/",
+      url: "https://sabora-acadimy-gxkt.vercel.app/",
     },
     {
       titleEn: "Café Cashier",
@@ -1209,3 +1236,12 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
