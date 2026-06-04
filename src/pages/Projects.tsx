@@ -114,6 +114,7 @@ function FadeInWhenVisible({ children, margin = "-100px", delay = 0 }: any) {
 }
 
 const navLinks = [
+  { en: "Home", ar: "الرئيسية", href: "/" },
   { en: "Work", ar: "أعمالنا", href: "/projects" },
   { en: "Services", ar: "خدماتنا", href: "/#services" },
   { en: "Packages", ar: "باقاتنا", href: "/#packages" },
@@ -190,11 +191,15 @@ export function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.1, color: "#fff" }}
-                className="text-sm font-semibold transition-colors"
-                style={{ color: "var(--text-muted)" }}
+                whileHover={{ 
+                  color: "var(--accent1)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="text-sm font-semibold transition-colors relative group"
+                style={{ color: "rgba(255, 255, 255, 0.8)" }}
               >
                 {lang === "en" ? link.en : link.ar}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
               </m.a>
             ))}
           </div>
@@ -272,11 +277,16 @@ export function Navbar() {
                   onClick={closeMenu}
                   initial={{ opacity: 0, x: lang === "en" ? -20 : 20 }}
                   animate={{ opacity: 1, x: 0 }}
+                  whileHover={{ 
+                    color: "var(--accent1)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   transition={{ delay: i * 0.1 }}
-                  style={{ color: "var(--text)" }}
-                  className="hover:text-[var(--accent1)] transition-colors py-2"
+                  style={{ color: "rgba(255, 255, 255, 0.9)" }}
+                  className="transition-colors py-2 relative group"
                 >
                   {lang === "en" ? link.en : link.ar}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
                 </m.a>
               ))}
             </div>

@@ -360,13 +360,11 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ 
-                  scale: 1.05, 
-                  y: -2,
                   color: "var(--accent1)"
                 }}
                 whileTap={{ scale: 0.95 }}
                 className="text-sm font-semibold transition-colors relative group"
-                style={{ color: "var(--text-muted)" }}
+                style={{ color: "rgba(255, 255, 255, 0.8)" }}
               >
                 {lang === "en" ? link.en : link.ar}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
@@ -451,13 +449,11 @@ export function Navbar() {
                   initial={{ opacity: 0, x: lang === "en" ? -20 : 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   whileHover={{ 
-                    scale: 1.05, 
-                    x: lang === "en" ? 5 : -5,
                     color: "var(--accent1)"
                   }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ delay: i * 0.1 }}
-                  style={{ color: "var(--text)" }}
+                  style={{ color: "rgba(255, 255, 255, 0.9)" }}
                   className="transition-colors py-2 relative group"
                 >
                   {lang === "en" ? link.en : link.ar}
