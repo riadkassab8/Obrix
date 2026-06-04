@@ -62,22 +62,43 @@ html[data-theme="dark"] {
   }
 }
 
-/* ── UIverse glowing CTA button ── */
+/* ── UIverse muted animated button ── */
 .uiverse-btn {
-  background: linear-gradient(135deg, #6c63ff 0%, #b06cf7 50%, #00e5c8 100%);
-  background-size: 200% 200%;
-  animation: gradientPan 4s ease infinite, pulseGlow 2.5s ease-in-out infinite;
+  background: linear-gradient(135deg, #4a4a5e, #3a3a4e);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 .uiverse-btn::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
-  transform: translateX(-100%);
+  inset: -2px;
+  background: linear-gradient(45deg, #4a4a5e, #5a5a6e, #6a6a7e, #4a4a5e);
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0.5;
+  animation: mutedGlow 3s linear infinite;
 }
-.uiverse-btn:hover::before {
-  transform: translateX(220%);
-  transition: transform 0.65s ease;
+.uiverse-btn:hover {
+  background: linear-gradient(135deg, #5a5a6e, #4a4a5e);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.uiverse-btn:active {
+  transform: translateY(0);
+}
+@keyframes mutedGlow {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }
 @keyframes gradientPan {
   0%   { background-position: 0% 50%; }
@@ -162,3 +183,12 @@ html[data-theme="dark"] {
   100% { box-shadow: 0 0 0 0   rgba(37,211,102,0); }
 }
 .wa-float { animation: waRing 2.2s ease-out infinite; }
+
+/* ── Shimmer animation for buttons ── */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}

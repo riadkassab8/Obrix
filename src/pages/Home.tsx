@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
+import { m, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { useLang } from "@/contexts/LangContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 import { 
   Moon, Sun, Menu, X, ArrowRight, ArrowLeft, Code, 
   TrendingUp, Monitor, Globe, Instagram, Zap, 
@@ -11,6 +16,15 @@ import { Button } from "@/components/ui/button";
 
 const WA_URL = "https://wa.me/201098277229";
 const GMAIL   = "mailto:riadkassab320@gmail.com";
+
+// Contact Form Schema
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 /* ── Legendary smooth scroll (easeInOutExpo) ── */
 function useSmoothScroll() {
@@ -56,7 +70,7 @@ function useSmoothScroll() {
   }, []);
 }
 
-/* ── UIverse animated gradient button ── */
+/* ── UIverse animated gradient button with shimmer effect ── */
 function UIverseBtn({
   children,
   href,
@@ -67,15 +81,16 @@ function UIverseBtn({
   fullWidth?: boolean;
 }) {
   return (
-    <motion.a
+    <m.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      whileTap={{ scale: 0.96 }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       className={`uiverse-btn relative inline-flex items-center justify-center gap-2 rounded-full font-bold text-white overflow-hidden cursor-pointer ${fullWidth ? "w-full py-4 text-lg" : "px-9 py-4 text-lg"}`}
     >
-      {children}
-    </motion.a>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
+    </m.a>
   );
 }
 
@@ -83,7 +98,7 @@ function UIverseBtn({
 function WABtn({ href, fullWidth = false }: { href: string; fullWidth?: boolean }) {
   const { lang } = useLang();
   return (
-    <motion.a
+    <m.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -95,7 +110,7 @@ function WABtn({ href, fullWidth = false }: { href: string; fullWidth?: boolean 
       </svg>
       {lang === "en" ? "Chat on WhatsApp" : "تواصل عبر واتساب"}
       {lang === "en" ? <ArrowRight className="w-5 h-5" /> : <ArrowLeft className="w-5 h-5" />}
-    </motion.a>
+    </m.a>
   );
 }
 
@@ -113,7 +128,7 @@ function MailBtn({ href }: { href: string }) {
   );
 
   return (
-    <motion.a
+    <m.a
       href={href}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -121,17 +136,17 @@ function MailBtn({ href }: { href: string }) {
       className="mail-btn"
     >
       {/* Default label — slides up & out on hover */}
-      <motion.span
+      <m.span
         animate={{ y: hovered ? "-110%" : "0%", opacity: hovered ? 0 : 1 }}
         transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
         className="absolute flex items-center gap-2 whitespace-nowrap"
       >
         <EnvelopeIcon />
         {lang === "en" ? "Send an Email" : "أرسل بريدًا"}
-      </motion.span>
+      </m.span>
 
       {/* Email address — slides up from below on hover */}
-      <motion.span
+      <m.span
         animate={{ y: hovered ? "0%" : "110%", opacity: hovered ? 1 : 0 }}
         transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
         className="absolute flex items-center gap-2 whitespace-nowrap"
@@ -139,14 +154,14 @@ function MailBtn({ href }: { href: string }) {
       >
         <EnvelopeIcon />
         riadkassab320@gmail.com
-      </motion.span>
+      </m.span>
 
       {/* Spacer to hold button width */}
       <span className="invisible flex items-center gap-2 whitespace-nowrap" aria-hidden>
         <EnvelopeIcon />
         riadkassab320@gmail.com
       </span>
-    </motion.a>
+    </m.a>
   );
 }
 
@@ -170,7 +185,15 @@ function FloatingWhatsApp() {
 }
 
 const navLinks = [
-  { en: "Work", ar: "أعمالنا", href: "#work" },
+  { en: "Home", ar: "الرئيسية", href: "/" },
+  { en: "Work", ar: "أعمالنا", href: "/projects" },
+  { en: "Services", ar: "خدماتنا", href: "#services" },
+  { en: "Packages", ar: "باقاتنا", href: "#packages" },
+  { en: "Contact", ar: "تواصل معنا", href: "#contact" }
+];
+
+const footerLinks = [
+  { en: "Work", ar: "أعمالنا", href: "/projects" },
   { en: "Services", ar: "خدماتنا", href: "#services" },
   { en: "Packages", ar: "باقاتنا", href: "#packages" },
   { en: "Contact", ar: "تواصل معنا", href: "#contact" }
@@ -194,7 +217,7 @@ function CursorGlow() {
   if (!isDesktop) return null;
 
   return (
-    <motion.div
+    <m.div
       className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[100] mix-blend-difference"
       animate={{
         x: mousePosition.x - 16,
@@ -223,7 +246,7 @@ function Particles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {Array.from({ length: 40 }).map((_, i) => (
-        <motion.div
+        <m.div
           key={i}
           className="absolute w-1 h-1 rounded-full opacity-30"
           style={{
@@ -253,14 +276,14 @@ function FadeInWhenVisible({ children, margin = "-100px", delay = 0 }: any) {
   const isInView = useInView(ref, { once: true, margin });
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={{ y: 40, opacity: 0 }}
       animate={isInView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
-      transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      transition={{ duration: 0.4, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -292,7 +315,7 @@ export function Navbar() {
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <a href="#" className="flex items-center gap-3 group relative overflow-visible">
             {/* الشكل السداسي الدوار - SVG عشان يظهر صح */}
-            <motion.div
+            <m.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               className="w-12 h-12 relative flex-shrink-0"
@@ -306,10 +329,10 @@ export function Navbar() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </motion.div>
+            </m.div>
             
             {/* الكلمة الكاملة orbix تطلع من جوا الشكل السداسي */}
-            <motion.span
+            <m.span
               animate={{ 
                 x: [-50, 0, 0, 0, -50],
                 opacity: [0, 1, 1, 1, 0],
@@ -325,29 +348,51 @@ export function Navbar() {
               style={{ color: "var(--text)" }}
             >
               orbix
-            </motion.span>
+            </m.span>
           </a>
 
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
+            {navLinks.map((link, i) => (
+              <m.a
                 key={link.en}
                 href={link.href}
-                className="text-sm font-semibold transition-colors hover:text-[var(--accent1)]"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -2,
+                  color: "var(--accent1)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="text-sm font-semibold transition-colors relative group"
                 style={{ color: "var(--text-muted)" }}
               >
                 {lang === "en" ? link.en : link.ar}
-              </a>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
+              </m.a>
             ))}
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <button onClick={toggleLang} className="text-sm font-bold hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
+            <m.button
+              onClick={toggleLang}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-sm font-bold hover:text-[var(--accent1)] transition-colors"
+              style={{ color: "var(--text)" }}
+            >
               {lang === "en" ? "عربي | EN" : "EN | عربي"}
-            </button>
-            <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors">
+            </m.button>
+            <m.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1, rotate: 180 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors"
+            >
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
-            </button>
+            </m.button>
             <WABtn href={WA_URL} />
           </div>
 
@@ -359,7 +404,7 @@ export function Navbar() {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -370,7 +415,7 @@ export function Navbar() {
             <div className="flex items-center justify-between pt-6 pb-8 border-b" style={{ borderColor: "var(--border)" }}>
               <div className="flex items-center gap-3">
                 {/* الشكل السداسي الدوار */}
-                <motion.div
+                <m.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                   className="w-10 h-10 relative flex-shrink-0"
@@ -384,7 +429,7 @@ export function Navbar() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </motion.div>
+                </m.div>
                 <span className="font-extrabold text-2xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
               </div>
               
@@ -399,18 +444,25 @@ export function Navbar() {
             {/* Navigation Links */}
             <div className="flex flex-col gap-6 text-2xl font-bold mt-12 flex-1">
               {navLinks.map((link, i) => (
-                <motion.a
+                <m.a
                   key={link.en}
                   href={link.href}
                   onClick={closeMenu}
                   initial={{ opacity: 0, x: lang === "en" ? -20 : 20 }}
                   animate={{ opacity: 1, x: 0 }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    x: lang === "en" ? 5 : -5,
+                    color: "var(--accent1)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   transition={{ delay: i * 0.1 }}
                   style={{ color: "var(--text)" }}
-                  className="hover:text-[var(--accent1)] transition-colors py-2"
+                  className="transition-colors py-2 relative group"
                 >
                   {lang === "en" ? link.en : link.ar}
-                </motion.a>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
+                </m.a>
               ))}
             </div>
 
@@ -426,7 +478,7 @@ export function Navbar() {
               </div>
               <WABtn href={WA_URL} fullWidth />
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
@@ -438,14 +490,14 @@ function StaggeredText({ text, delay = 0, className = "" }: { text: string, dela
   return (
     <div className={`flex flex-wrap justify-center gap-x-3 gap-y-2 ${className}`}>
       {words.map((word, i) => (
-        <motion.span
+        <m.span
           key={i}
           initial={{ opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
           animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
           transition={{ duration: 0.6, delay: delay + i * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
           {word}
-        </motion.span>
+        </m.span>
       ))}
     </div>
   );
@@ -463,13 +515,13 @@ export function Hero() {
         maskImage: 'radial-gradient(circle at center, black, transparent 70%)'
       }} />
 
-      <motion.div
+      <m.div
         animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full blur-[120px] opacity-20 pointer-events-none"
         style={{ backgroundColor: "var(--accent1)" }}
       />
-      <motion.div
+      <m.div
         animate={{ x: [0, -100, 0], y: [0, 50, 0] }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] rounded-full blur-[100px] opacity-20 pointer-events-none"
@@ -481,7 +533,7 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center flex-1 justify-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -489,13 +541,13 @@ export function Hero() {
           style={{ backgroundColor: "var(--surface2)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           {lang === "en" ? "✦ Full-Stack Digital Studio" : "✦ استوديو رقمي متكامل"}
-        </motion.div>
+        </m.div>
         
         <div className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 max-w-5xl" style={{ color: "var(--text)" }}>
           <StaggeredText text={lang === "en" ? "We Build Digital Worlds." : "نبني عوالم رقمية."} delay={0.2} />
         </div>
         
-        <motion.p 
+        <m.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
@@ -505,15 +557,15 @@ export function Hero() {
           {lang === "en" 
             ? "From stunning websites to viral campaigns — orbix turns your vision into a digital experience people remember." 
             : "من المواقع المذهلة إلى الحملات الفيروسية — أوبريكس تحول رؤيتك إلى تجربة رقمية لا تُنسى."}
-        </motion.p>
+        </m.p>
         
-        <motion.div 
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <a href="#work" className="w-full sm:w-auto">
+          <a href="/projects" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text-muted)] hover:scale-105 transition-transform rounded-full px-8 py-6 text-lg">
               {lang === "en" ? "See Our Work" : "شاهد أعمالنا"}
               {lang === "en" ? <ArrowRight className="ml-2 w-5 h-5" /> : <ArrowLeft className="mr-2 w-5 h-5" />}
@@ -524,16 +576,16 @@ export function Hero() {
               {lang === "en" ? "View Packages" : "استعرض الباقات"}
             </Button>
           </a>
-        </motion.div>
+        </m.div>
       </div>
 
-      <motion.div 
+      <m.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
       >
         <ChevronDown size={32} style={{ color: "var(--text-muted)" }} opacity={0.5} />
-      </motion.div>
+      </m.div>
     </section>
   );
 }
@@ -547,13 +599,13 @@ export function Marquee() {
   return (
     <div className="w-full overflow-hidden py-5 border-y whitespace-nowrap flex relative" style={{ borderColor: "var(--border)", backgroundColor: "var(--surface)" }}>
       <div className="absolute inset-0 bg-gradient-to-r from-[var(--surface)] via-transparent to-[var(--surface)] z-10 pointer-events-none" />
-      <motion.div
+      <m.div
         animate={{ x: lang === "en" ? [0, -1000] : [0, 1000] }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="flex gap-4 items-center text-xl font-bold tracking-widest whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent1)] to-[var(--accent2)]"
       >
         {content}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -585,7 +637,7 @@ export function About() {
           </FadeInWhenVisible>
 
           <div className="relative h-[400px] w-full max-w-md mx-auto">
-            <motion.div 
+            <m.div 
               animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="absolute top-0 right-0 w-3/4 p-6 rounded-2xl border backdrop-blur-md shadow-2xl z-20"
               style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--accent1)" }}
@@ -594,9 +646,9 @@ export function About() {
                 <Code className="w-8 h-8" style={{ color: "var(--accent1)" }} />
                 <h3 className="font-bold text-xl" style={{ color: "var(--text)" }}>{lang === "en" ? "Web Development" : "تطوير الويب"}</h3>
               </div>
-            </motion.div>
+            </m.div>
             
-            <motion.div 
+            <m.div 
               animate={{ y: [0, 15, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               className="absolute top-1/3 left-0 w-3/4 p-6 rounded-2xl border backdrop-blur-md shadow-2xl z-10"
               style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--accent2)" }}
@@ -605,9 +657,9 @@ export function About() {
                 <TrendingUp className="w-8 h-8" style={{ color: "var(--accent2)" }} />
                 <h3 className="font-bold text-xl" style={{ color: "var(--text)" }}>{lang === "en" ? "Marketing" : "التسويق الرقمي"}</h3>
               </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div 
+            <m.div 
               animate={{ y: [0, -10, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
               className="absolute bottom-0 right-10 w-3/4 p-6 rounded-2xl border backdrop-blur-md shadow-2xl z-30"
               style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--accent3)" }}
@@ -616,7 +668,7 @@ export function About() {
                 <Monitor className="w-8 h-8" style={{ color: "var(--accent3)" }} />
                 <h3 className="font-bold text-xl" style={{ color: "var(--text)" }}>{lang === "en" ? "Desktop Apps" : "تطبيقات سطح المكتب"}</h3>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>
@@ -662,7 +714,7 @@ export function Services() {
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((svc, i) => (
             <FadeInWhenVisible key={i} delay={i * 0.2}>
-              <motion.div
+              <m.div
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="p-8 rounded-3xl border group relative overflow-hidden h-full flex flex-col"
@@ -682,303 +734,10 @@ export function Services() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             </FadeInWhenVisible>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-const IFRAME_W = 1280;
-const IFRAME_H = 960;
-
-function LivePreview({ url }: { url: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.22);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const obs = new ResizeObserver((entries) => {
-      for (const e of entries) {
-        setScale(e.contentRect.width / IFRAME_W);
-      }
-    });
-    obs.observe(containerRef.current);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <div ref={containerRef} className="relative w-full overflow-hidden rounded-xl" style={{ height: 220 }}>
-      {/* neutral dark fallback — no color */}
-      <div className="absolute inset-0" style={{ backgroundColor: "var(--surface2)" }} />
-      <iframe
-        src={url}
-        width={IFRAME_W}
-        height={IFRAME_H}
-        scrolling="no"
-        loading="lazy"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-          pointerEvents: "none",
-          border: "none",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          display: "block",
-        }}
-        sandbox="allow-same-origin allow-scripts allow-forms"
-      />
-    </div>
-  );
-}
-
-export function Work() {
-  const { lang } = useLang();
-  const [activeFilter, setActiveFilter] = useState("All");
-  
-  const projects = [
-    {
-      titleEn: "Professional Portfolio",
-      titleAr: "بورتفوليو احترافي",
-      descEn: "Clean and professional portfolio website with elegant design and smooth user experience.",
-      descAr: "موقع بورتفوليو احترافي بتصميم أنيق وتجربة مستخدم سلسة.",
-      tags: ["React", "Next.js", "Portfolio", "Vercel"],
-      category: "Portfolio",
-      url: "https://new-portfolio-site-h2gw.vercel.app/",
-    },
-    {
-      titleEn: "Moaz Sigma",
-      titleAr: "معز سيجما",
-      descEn: "Professional portfolio website showcasing skills and projects with modern design.",
-      descAr: "موقع بورتفوليو احترافي يعرض المهارات والمشاريع بتصميم عصري.",
-      tags: ["React", "Portfolio", "Vercel"],
-      category: "Portfolio",
-      url: "https://moaz-sigma.vercel.app/",
-    },
-    {
-      titleEn: "Eldod E-Commerce",
-      titleAr: "الدود للتجارة الإلكترونية",
-      descEn: "Full-featured e-commerce platform with product catalog and shopping cart.",
-      descAr: "منصة تجارة إلكترونية متكاملة مع كتالوج منتجات وسلة تسوق.",
-      tags: ["React", "Tailwind CSS", "E-Commerce", "Vercel"],
-      category: "E-Commerce",
-      url: "https://eldod-ecommerce-wind.vercel.app/",
-    },
-    {
-      titleEn: "Dr. Mohamed",
-      titleAr: "د. محمد",
-      descEn: "Personal portfolio for a medical professional with clean layout and service sections.",
-      descAr: "بورتفوليو طبي احترافي بتصميم أنيق وأقسام للخدمات.",
-      tags: ["React", "CSS Animations", "Portfolio", "Vercel"],
-      category: "Portfolio",
-      url: "https://dr-mohamed-page.vercel.app/",
-    },
-    {
-      titleEn: "Sneakers Store",
-      titleAr: "سنيكرز ستور",
-      descEn: "Full e-commerce store for a sneaker brand with product pages and cart.",
-      descAr: "متجر إلكتروني متكامل لعلامة أحذية رياضية مع صفحات منتجات وسلة.",
-      tags: ["React", "E-Commerce", "Fashion", "Responsive"],
-      categories: ["E-Commerce", "Dashboard"],
-      url: "https://sneakers-ecommerce-henna.vercel.app/",
-    },
-    {
-      titleEn: "JUBA Store",
-      titleAr: "جوبا ستور",
-      descEn: "Luxury fashion and footwear e-commerce platform with elegant design and seamless shopping experience.",
-      descAr: "منصة تجارة إلكترونية للأزياء والأحذية بتصميم أنيق وتجربة تسوق سلسة.",
-      tags: ["React", "E-Commerce", "Fashion", "Responsive"],
-      category: "Landing",
-      url: "https://juba-store.vercel.app/",
-    },
-    {
-      titleEn: "Coffee Corner",
-      titleAr: "كوفي كورنر",
-      descEn: "Modern coffee shop website with elegant design and smooth animations.",
-      descAr: "موقع مقهى عصري بتصميم أنيق وأنيميشن سلس.",
-      tags: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
-      category: "Landing",
-      url: "https://coffee-corner-a1zq.vercel.app/",
-    },
-    {
-      titleEn: "Same Menu Site",
-      titleAr: "موقع القائمة",
-      descEn: "Restaurant menu website with elegant design and easy navigation.",
-      descAr: "موقع قائمة مطعم بتصميم أنيق وتصفح سهل.",
-      tags: ["React", "Restaurant", "Vercel"],
-      category: "Landing",
-      url: "https://new-same-menu-site.vercel.app/",
-    },
-    {
-      titleEn: "Coffee Brand M",
-      titleAr: "علامة قهوة M",
-      descEn: "Premium coffee brand website with sophisticated design and product showcase.",
-      descAr: "موقع علامة قهوة فاخرة بتصميم راقٍ وعرض منتجات.",
-      tags: ["React", "Coffee", "Vercel"],
-      category: "Landing",
-      url: "https://coffe-brand-m-salary.vercel.app/",
-    },
-    {
-      titleEn: "Coffee Low Budget",
-      titleAr: "قهوة ميزانية منخفضة",
-      descEn: "Budget-friendly coffee shop website with clean design and essential features.",
-      descAr: "موقع مقهى بتصميم بسيط وميزات أساسية.",
-      tags: ["React", "Coffee", "Vercel"],
-      category: "Landing",
-      url: "https://coffe-low-budget.vercel.app/",
-    },
-    {
-      titleEn: "Quran Academy",
-      titleAr: "أكاديمية القرآن",
-      descEn: "Islamic learning platform with Quran recitation, lessons, and educational resources.",
-      descAr: "منصة تعليم إسلامية لتحفيظ القرآن والدروس والمحتوى التعليمي.",
-      tags: ["React", "Next.js", "Tailwind CSS", "Islamic Content"],
-      category: "Education",
-      url: "https://quran-academy-sooty.vercel.app/",
-    },
-    {
-      titleEn: "Sabora Academy",
-      titleAr: "أكاديمية صابورا",
-      descEn: "Modern educational academy platform with courses, student management, and learning resources.",
-      descAr: "منصة أكاديمية تعليمية حديثة مع كورسات وإدارة طلاب ومحتوى تعليمي.",
-      tags: ["React", "Next.js", "Education", "LMS"],
-      category: "Education",
-      url: "https://sabora-acadimy-gxkt.vercel.app/",
-    },
-    {
-      titleEn: "Café Cashier",
-      titleAr: "كاشير الكافيه",
-      descEn: "Complete dashboard system with advanced features, data visualization, analytics, and comprehensive admin panel.",
-      descAr: "نظام لوحة تحكم متكامل مع ميزات متقدمة وتحليلات ولوحة إدارة شاملة.",
-      tags: ["Angular", "TypeScript", "Dashboard", "Charts"],
-      categories: ["E-Commerce", "Dashboard"],
-      url: "https://cahier-angular-qhet.vercel.app/login",
-    },
-  ];
-
-  const filters = [
-    { en: "All", ar: "الكل", value: "All" },
-    { en: "Portfolio", ar: "بورتفوليو", value: "Portfolio" },
-    { en: "E-Commerce", ar: "متاجر إلكترونية", value: "E-Commerce" },
-    { en: "Landing", ar: "صفحات هبوط", value: "Landing" },
-    { en: "Education", ar: "تعليمية", value: "Education" },
-    { en: "Dashboard", ar: "لوحات تحكم", value: "Dashboard" },
-  ];
-
-  const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : projects.filter((p) => (p.categories ?? [p.category]).includes(activeFilter));
-
-  return (
-    <section className="py-32" id="work">
-      <div className="container mx-auto px-6">
-        <FadeInWhenVisible>
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text)" }}>
-              {lang === "en" ? "Selected Work" : "أبرز أعمالنا"}
-            </h2>
-            <p className="text-xl mb-8" style={{ color: "var(--text-muted)" }}>
-              {lang === "en" ? "A glimpse of what we've shipped." : "لمحة مما أنجزناه."}
-            </p>
-
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap gap-3 justify-center">
-              {filters.map((filter) => (
-                <motion.button
-                  key={filter.value}
-                  onClick={() => setActiveFilter(filter.value)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-2.5 rounded-full font-semibold text-sm transition-all"
-                  style={{
-                    backgroundColor: activeFilter === filter.value ? "var(--accent1)" : "var(--surface)",
-                    color: activeFilter === filter.value ? "#fff" : "var(--text)",
-                    border: `2px solid ${activeFilter === filter.value ? "var(--accent1)" : "var(--border)"}`,
-                  }}
-                >
-                  {lang === "en" ? filter.en : filter.ar}
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </FadeInWhenVisible>
-
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={activeFilter}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-          {filteredProjects.map((p, i) => (
-            <FadeInWhenVisible key={i} delay={i * 0.07}>
-              <motion.a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`portfolio-card-${i}`}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="group block rounded-2xl overflow-hidden cursor-pointer"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  border: "1px solid var(--card-border)",
-                }}
-              >
-                {/* ── live preview iframe ── */}
-                <div className="relative overflow-hidden" style={{ height: 220 }}>
-                  <LivePreview url={p.url} />
-                  {/* hover dim + "View Live" pill */}
-                  <div
-                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ backgroundColor: "rgba(0,0,0,0.52)", backdropFilter: "blur(3px)" }}
-                  >
-                    <span className="flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full bg-white/10 text-white border border-white/25">
-                      {lang === "en" ? "View Live" : "مشاهدة المشروع"}
-                      {lang === "en" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-                    </span>
-                  </div>
-                </div>
-
-                {/* ── info card ── */}
-                <div className="p-5">
-                  {/* title */}
-                  <h3 className="font-bold text-xl leading-snug mb-2" style={{ color: "var(--text)" }}>
-                    {lang === "en" ? p.titleEn : p.titleAr}
-                  </h3>
-
-                  {/* description */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
-                    {lang === "en" ? p.descEn : p.descAr}
-                  </p>
-
-                  {/* tech tag pills — individual badges */}
-                  <div className="flex flex-wrap gap-2">
-                    {p.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs font-semibold px-3 py-1 rounded-full"
-                        style={{
-                          backgroundColor: "var(--surface2)",
-                          color: "var(--text-muted)",
-                          border: "1px solid var(--card-border)",
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.a>
-            </FadeInWhenVisible>
-          ))}
-          </motion.div>
-        </AnimatePresence>
       </div>
     </section>
   );
@@ -1077,14 +836,14 @@ export function Packages() {
 
 export function WhyOrbix() {
   const { lang } = useLang();
-  
+
   const chips = [
-    { en: "⚡ Speed-Obsessed", ar: "سرعة بلا تنازل" },
-    { en: "🎨 Design-First", ar: "التصميم أولًا" },
-    { en: "🧠 Full-Stack Team", ar: "فريق متكامل" },
-    { en: "📱 Mobile-First Always", ar: "الجوال أولًا" },
-    { en: "🔍 Detail-Oriented", ar: "حب التفاصيل" },
-    { en: "🚀 Growth Partners", ar: "شريك نمو" }
+    { en: "Speed-Obsessed", ar: "سرعة بلا تنازل", icon: <Zap className="w-5 h-5" /> },
+    { en: "Design-First", ar: "التصميم أولًا", icon: <Paintbrush className="w-5 h-5" /> },
+    { en: "Full-Stack Team", ar: "فريق متكامل", icon: <Users className="w-5 h-5" /> },
+    { en: "Mobile-First Always", ar: "الجوال أولًا", icon: <Smartphone className="w-5 h-5" /> },
+    { en: "Detail-Oriented", ar: "حب التفاصيل", icon: <Search className="w-5 h-5" /> },
+    { en: "Growth Partners", ar: "شريك نمو", icon: <Rocket className="w-5 h-5" /> }
   ];
 
   return (
@@ -1096,14 +855,15 @@ export function WhyOrbix() {
           </h2>
           <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             {chips.map((chip, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 whileHover={{ scale: 1.05, y: -2 }}
-                className="px-6 py-4 rounded-2xl border font-bold text-lg cursor-default"
+                className="px-6 py-4 rounded-2xl border font-bold text-lg cursor-default flex items-center gap-3"
                 style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
               >
-                {lang === "en" ? chip.en : chip.ar}
-              </motion.div>
+                <span style={{ color: "var(--accent1)" }}>{chip.icon}</span>
+                <span>{lang === "en" ? chip.en : chip.ar}</span>
+              </m.div>
             ))}
           </div>
         </FadeInWhenVisible>
@@ -1114,29 +874,130 @@ export function WhyOrbix() {
 
 export function CTA() {
   const { lang } = useLang();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    try {
+      // Replace with your EmailJS service ID, template ID, and public key
+      await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        {
+          from_name: data.name,
+          from_email: data.email,
+          message: data.message,
+        },
+        "YOUR_PUBLIC_KEY"
+      );
+      toast.success(lang === "en" ? "Message sent successfully!" : "تم إرسال الرسالة بنجاح!");
+      reset();
+    } catch (error) {
+      toast.error(lang === "en" ? "Failed to send message. Please try again." : "فشل إرسال الرسالة. حاول مرة أخرى.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   
   return (
     <section className="relative py-40 overflow-hidden" id="contact">
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg)] via-[var(--accent1)]/10 to-[var(--accent2)]/10" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
       
-      <div className="container mx-auto px-6 relative z-10 text-center">
+      <div className="container mx-auto px-6 relative z-10">
         <FadeInWhenVisible>
-          <div className="inline-block px-4 py-2 rounded-full mb-8 text-sm font-bold tracking-wider" style={{ color: "var(--accent1)", backgroundColor: "var(--accent1)10" }}>
-            {lang === "en" ? "★ Let's Create Something Remarkable" : "✦ لنصنع شيئًا استثنائيًا"}
+          <div className="text-center mb-12">
+            <div className="inline-block px-4 py-2 rounded-full mb-8 text-sm font-bold tracking-wider" style={{ color: "var(--accent1)", backgroundColor: "var(--accent1)10" }}>
+              {lang === "en" ? "★ Let's Create Something Remarkable" : "✦ لنصنع شيئًا استثنائيًا"}
+            </div>
+            <h2 className="text-5xl md:text-7xl font-extrabold mb-8 max-w-4xl mx-auto" style={{ color: "var(--text)" }}>
+              {lang === "en" ? "Ready to Build Your Digital World?" : "مستعد لبناء عالمك الرقمي؟"}
+            </h2>
+            <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto" style={{ color: "var(--text-muted)" }}>
+              {lang === "en" 
+                ? "From idea to launch — orbix handles everything. Let's start a conversation."
+                : "من الفكرة إلى الإطلاق — أوبريكس تتولى كل شيء. لنبدأ الحديث."}
+            </p>
           </div>
-          <h2 className="text-5xl md:text-7xl font-extrabold mb-8 max-w-4xl mx-auto" style={{ color: "var(--text)" }}>
-            {lang === "en" ? "Ready to Build Your Digital World?" : "مستعد لبناء عالمك الرقمي؟"}
-          </h2>
-          <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto" style={{ color: "var(--text-muted)" }}>
-            {lang === "en" 
-              ? "From idea to launch — orbix handles everything. Let's start a conversation."
-              : "من الفكرة إلى الإطلاق — أوبريكس تتولى كل شيء. لنبدأ الحديث."}
-          </p>
           
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
-            <WABtn href={WA_URL} />
-            <MailBtn href={GMAIL} />
+          <div className="max-w-2xl mx-auto">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <input
+                  {...register("name")}
+                  placeholder={lang === "en" ? "Your Name" : "اسمك"}
+                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all"
+                  style={{ 
+                    backgroundColor: "var(--card-bg)", 
+                    borderColor: "var(--card-border)",
+                    color: "var(--text)"
+                  }}
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                )}
+              </div>
+              
+              <div>
+                <input
+                  {...register("email")}
+                  type="email"
+                  placeholder={lang === "en" ? "Your Email" : "بريدك الإلكتروني"}
+                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all"
+                  style={{ 
+                    backgroundColor: "var(--card-bg)", 
+                    borderColor: "var(--card-border)",
+                    color: "var(--text)"
+                  }}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                )}
+              </div>
+              
+              <div>
+                <textarea
+                  {...register("message")}
+                  rows={4}
+                  placeholder={lang === "en" ? "Your Message" : "رسالتك"}
+                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all resize-none"
+                  style={{ 
+                    backgroundColor: "var(--card-bg)", 
+                    borderColor: "var(--card-border)",
+                    color: "var(--text)"
+                  }}
+                />
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
+                )}
+              </div>
+              
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-4 rounded-full font-bold text-white transition-all disabled:opacity-50"
+                style={{ backgroundColor: "var(--accent1)" }}
+              >
+                {isSubmitting 
+                  ? (lang === "en" ? "Sending..." : "جاري الإرسال...")
+                  : (lang === "en" ? "Send Message" : "إرسال الرسالة")
+                }
+              </button>
+            </form>
+            
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mt-8">
+              <WABtn href={WA_URL} />
+              <MailBtn href={GMAIL} />
+            </div>
           </div>
         </FadeInWhenVisible>
       </div>
@@ -1154,7 +1015,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4 overflow-visible">
               {/* الشكل السداسي الدوار - SVG */}
-              <motion.div
+              <m.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 className="w-11 h-11 relative flex-shrink-0"
@@ -1168,7 +1029,7 @@ export function Footer() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </motion.div>
+              </m.div>
               <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
             </div>
             <p className="text-lg font-medium" style={{ color: "var(--text-muted)" }}>
@@ -1181,7 +1042,7 @@ export function Footer() {
               {lang === "en" ? "Quick Links" : "روابط سريعة"}
             </h4>
             <div className="flex flex-col gap-3 font-medium" style={{ color: "var(--text-muted)" }}>
-              {navLinks.map(l => (
+              {footerLinks.map(l => (
                 <a key={l.en} href={l.href} className="hover:text-[var(--accent1)] transition-colors w-fit">
                   {lang === "en" ? l.en : l.ar}
                 </a>
@@ -1227,7 +1088,6 @@ export default function Home() {
       <Marquee />
       <About />
       <Services />
-      <Work />
       <Packages />
       <WhyOrbix />
       <CTA />
