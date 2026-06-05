@@ -16,7 +16,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react(), tailwindcss(), visualizer({ open: true, gzipSize: true })],
+  plugins: [react(), tailwindcss(), visualizer({ open: process.env.NODE_ENV !== "production", gzipSize: true })],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),
