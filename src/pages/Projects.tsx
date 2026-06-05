@@ -180,6 +180,7 @@ export function Navbar() {
               whileTap={{ scale: 0.95 }}
               className="text-sm font-bold hover:text-[var(--accent1)] transition-colors"
               style={{ color: "var(--text)" }}
+              aria-label="Toggle language"
             >
               {lang === "en" ? "عربي | EN" : "EN | عربي"}
             </m.button>
@@ -188,7 +189,8 @@ export function Navbar() {
               whileHover={{ scale: 1.1, rotate: 180 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors"
+              className="p-3 rounded-full hover:bg-[var(--surface2)] transition-colors"
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
             </m.button>

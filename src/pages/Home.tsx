@@ -365,6 +365,7 @@ export function Navbar() {
               whileTap={{ scale: 0.95 }}
               className="text-sm font-bold hover:text-[var(--accent1)] transition-colors"
               style={{ color: "var(--text)" }}
+              aria-label="Toggle language"
             >
               {lang === "en" ? "عربي | EN" : "EN | عربي"}
             </m.button>
@@ -373,7 +374,8 @@ export function Navbar() {
               whileHover={{ scale: 1.1, rotate: 180 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors"
+              className="p-3 rounded-full hover:bg-[var(--surface2)] transition-colors"
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
             </m.button>
@@ -524,9 +526,9 @@ export function Hero() {
           {lang === "en" ? "✦ Full-Stack Digital Studio" : "✦ استوديو رقمي متكامل"}
         </m.div>
         
-        <div className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 max-w-5xl" style={{ color: "var(--text)" }}>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 max-w-5xl" style={{ color: "var(--text)" }}>
           <StaggeredText text={lang === "en" ? "We Build Digital Worlds." : "نبني عوالم رقمية."} delay={0.2} />
-        </div>
+        </h1>
         
         <m.p 
           initial={{ opacity: 0, y: 20 }}
