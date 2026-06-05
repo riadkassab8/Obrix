@@ -34,13 +34,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // Force refresh for users with cached old version
-      if (window.localStorage.getItem('obrix-version') !== '1.0.0') {
-        window.localStorage.setItem('obrix-version', '1.0.0');
-        window.location.reload(true);
-      }
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
