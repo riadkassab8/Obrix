@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Sitemap: https://Obrix.com/sitemap.xml
+# Sitemap: https://your-domain.com/sitemap.xml
