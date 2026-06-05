@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const WA_URL = "https://wa.me/+20 10 25187974";
+const WA_URL = "https://wa.me/+201025187974";
 const GMAIL   = "mailto:riadkassab320@gmail.com";
 
 // Contact Form Schema
@@ -907,7 +907,6 @@ export function CTA() {
   return (
     <section className="relative py-40 overflow-hidden" id="contact">
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg)] via-[var(--accent1)]/10 to-[var(--accent2)]/10" />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
       
       <div className="container mx-auto px-6 relative z-10">
         <FadeInWhenVisible>
