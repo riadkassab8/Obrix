@@ -26,7 +26,11 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
+    headers: {
+      "Content-Type": "application/javascript",
+      "Access-Control-Allow-Origin": "*"
+    }
   },
   preview: {
     port: 4173,
