@@ -13,9 +13,17 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>("en");
 
   useEffect(() => {
+    const saved = localStorage.getItem("obrix-lang") as Lang;
+    if (saved) {
+      setLang(saved);
+    }
+  }, []);
+
+  useEffect(() => {
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = lang;
     document.body.style.fontFamily = lang === "ar" ? "'Cairo', sans-serif" : "'Syne', sans-serif";
+    localStorage.setItem("obrix-lang", lang);
   }, [lang]);
 
   const toggleLang = () => setLang((l) => (l === "en" ? "ar" : "en"));
