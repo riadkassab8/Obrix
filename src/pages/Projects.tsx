@@ -194,7 +194,7 @@ export function Navbar() {
             </m.button>
           </div>
 
-          <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
+          <button className="md:hidden" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
             <Menu size={24} style={{ color: "var(--text)" }} />
           </button>
         </div>
@@ -232,6 +232,7 @@ export function Navbar() {
               <button
                 className="p-2 rounded-full hover:bg-[var(--surface2)] transition-colors"
                 onClick={closeMenu}
+                aria-label="Close menu"
               >
                 <X size={24} style={{ color: "var(--text)" }} />
               </button>
@@ -261,10 +262,10 @@ export function Navbar() {
 
             <div className="flex flex-col gap-6 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
               <div className="flex items-center justify-between">
-                <button onClick={toggleLang} className="text-base font-bold hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
+                <button onClick={toggleLang} className="text-base font-bold hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }} aria-label="Toggle language">
                   {lang === "en" ? "التبديل للعربية" : "Switch to English"}
                 </button>
-                <button onClick={toggleTheme} className="p-3 rounded-full hover:bg-[var(--surface2)] transition-colors" style={{ backgroundColor: "var(--surface)" }}>
+                <button onClick={toggleTheme} className="p-3 rounded-full hover:bg-[var(--surface2)] transition-colors" style={{ backgroundColor: "var(--surface)" }} aria-label="Toggle theme">
                   {theme === "dark" ? <Sun size={20} style={{ color: "var(--text)" }} /> : <Moon size={20} style={{ color: "var(--text)" }} />}
                 </button>
               </div>
