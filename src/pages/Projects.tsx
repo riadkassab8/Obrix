@@ -10,69 +10,38 @@ const WA_URL = "https://wa.me/+201025187974";
 const IFRAME_W = 1280;
 const IFRAME_H = 960;
 
-function LivePreview({ url, screenshot }: { url: string; screenshot: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.22);
-  const [active, setActive] = useState(false);
-
-  const updateScale = () => {
-    if (!containerRef.current) return;
-    setScale(containerRef.current.clientWidth / IFRAME_W);
-  };
-
-  useState(() => {
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  });
+function LivePreview({ url }: { url: string }) {
+  const [hasError, setHasError] = useState(false);
 
   return (
-    <div ref={containerRef} className="relative w-full overflow-hidden rounded-xl" style={{ height: 220 }}>
-      {active ? (
-        <>
-          <div className="absolute inset-0" style={{ backgroundColor: "var(--surface2)" }} />
-          <iframe
-            src={url}
-            width={IFRAME_W}
-            height={IFRAME_H}
-            scrolling="no"
-            loading="lazy"
-            style={{
-              transform: `scale(${scale})`,
-              transformOrigin: "top left",
-              pointerEvents: "none",
-              border: "none",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              display: "block",
-            }}
-            sandbox="allow-same-origin allow-scripts allow-forms"
-          />
-        </>
-      ) : (
-        <div
-          onClick={() => setActive(true)}
-          className="w-full h-full flex flex-col items-center justify-center cursor-pointer transition-colors hover:bg-[var(--surface2)] relative"
-          style={{ backgroundColor: "var(--surface)" }}
-        >
-          <img
-            src={screenshot}
-            alt="Project preview"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 transition-opacity hover:bg-black/30">
-            <div className="text-4xl mb-2 text-white">▶</div>
-            <span className="text-sm font-semibold text-white">
-              Click to Preview
-            </span>
-          </div>
+    <div className="relative w-full overflow-hidden rounded-xl" style={{ height: 220 }}>
+      {hasError ? (
+        <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: "var(--surface)" }}>
+          <span className="text-sm" style={{ color: "var(--text-muted)" }}>
+            Preview unavailable
+          </span>
         </div>
+      ) : (
+        <iframe
+          src={url}
+          width="400%"
+          height="400%"
+          scrolling="no"
+          loading="lazy"
+          onError={() => setHasError(true)}
+          style={{
+            transform: "scale(0.25)",
+            transformOrigin: "top left",
+            pointerEvents: "none",
+            border: "none",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "400%",
+            height: "400%",
+          }}
+          sandbox="allow-same-origin allow-scripts allow-forms"
+        />
       )}
     </div>
   );
@@ -223,7 +192,6 @@ export function Navbar() {
             >
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
             </m.button>
-            <WABtn href={WA_URL} />
           </div>
 
           <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -300,7 +268,6 @@ export function Navbar() {
                   {theme === "dark" ? <Sun size={20} style={{ color: "var(--text)" }} /> : <Moon size={20} style={{ color: "var(--text)" }} />}
                 </button>
               </div>
-              <WABtn href={WA_URL} fullWidth />
             </div>
           </m.div>
         )}
@@ -329,17 +296,15 @@ export default function Projects() {
       tags: ["React", "Next.js", "Portfolio", "Vercel"],
       category: "Portfolio",
       url: "https://new-portfolio-site-h2gw.vercel.app/",
-      screenshot: "/screenshots/portfolio.webp",
     },
     {
-      titleEn: "Moaz Sigma",
-      titleAr: "معز سيجما",
+      titleEn: "Moaz Zaid",
+      titleAr: "  معاذ  ذيد ",
       descEn: "Professional portfolio website showcasing skills and projects with modern design.",
       descAr: "موقع بورتفوليو احترافي يعرض المهارات والمشاريع بتصميم عصري.",
       tags: ["React", "Portfolio", "Vercel"],
       category: "Portfolio",
       url: "https://moaz-sigma.vercel.app/",
-      screenshot: "/screenshots/moaz-sigma.webp",
     },
     {
       titleEn: "Eldod E-Commerce",
@@ -349,7 +314,6 @@ export default function Projects() {
       tags: ["React", "Tailwind CSS", "E-Commerce", "Vercel"],
       category: "E-Commerce",
       url: "https://eldod-ecommerce-wind.vercel.app/",
-      screenshot: "/screenshots/eldod-ecommerce.webp",
     },
     {
       titleEn: "Dr. Mohamed",
@@ -359,7 +323,6 @@ export default function Projects() {
       tags: ["React", "CSS Animations", "Portfolio", "Vercel"],
       category: "Portfolio",
       url: "https://dr-mohamed-page.vercel.app/",
-      screenshot: "/screenshots/dr-mohamed.webp",
     },
     {
       titleEn: "Sneakers Store",
@@ -369,7 +332,6 @@ export default function Projects() {
       tags: ["React", "E-Commerce", "Fashion", "Responsive"],
       categories: ["E-Commerce", "Dashboard"],
       url: "https://sneakers-ecommerce-henna.vercel.app/",
-      screenshot: "/screenshots/sneakers-store.webp",
     },
     {
       titleEn: "JUBA Store",
@@ -379,7 +341,6 @@ export default function Projects() {
       tags: ["React", "E-Commerce", "Fashion", "Responsive"],
       category: "Landing",
       url: "https://juba-store.vercel.app/",
-      screenshot: "/screenshots/juba-store.webp",
     },
     {
       titleEn: "Coffee Corner",
@@ -389,7 +350,6 @@ export default function Projects() {
       tags: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
       category: "Landing",
       url: "https://coffee-corner-a1zq.vercel.app/",
-      screenshot: "/screenshots/coffee-corner.webp",
     },
     {
       titleEn: "Same Menu Site",
@@ -399,7 +359,6 @@ export default function Projects() {
       tags: ["React", "Restaurant", "Vercel"],
       category: "Landing",
       url: "https://new-same-menu-site.vercel.app/",
-      screenshot: "/screenshots/same-menu.webp",
     },
     {
       titleEn: "Coffee Brand M",
@@ -409,7 +368,6 @@ export default function Projects() {
       tags: ["React", "Coffee", "Vercel"],
       category: "Landing",
       url: "https://coffe-brand-m-salary.vercel.app/",
-      screenshot: "/screenshots/coffee-brand-m.webp",
     },
     {
       titleEn: "Coffee Low Budget",
@@ -419,7 +377,6 @@ export default function Projects() {
       tags: ["React", "Coffee", "Vercel"],
       category: "Landing",
       url: "https://coffe-low-budget.vercel.app/",
-      screenshot: "/screenshots/coffee-low-budget.webp",
     },
     {
       titleEn: "Quran Academy",
@@ -429,7 +386,6 @@ export default function Projects() {
       tags: ["React", "Next.js", "Tailwind CSS", "Islamic Content"],
       category: "Education",
       url: "https://quran-academy-sooty.vercel.app/",
-      screenshot: "/screenshots/quran-academy.webp",
     },
     {
       titleEn: "Sabora Academy",
@@ -439,7 +395,6 @@ export default function Projects() {
       tags: ["React", "Next.js", "Education", "LMS"],
       category: "Education",
       url: "https://sabora-acadimy-gxkt.vercel.app/",
-      screenshot: "/screenshots/sabora-academy.webp",
     },
     {
       titleEn: "Café Cashier",
@@ -449,7 +404,6 @@ export default function Projects() {
       tags: ["Angular", "TypeScript", "Dashboard", "Charts"],
       categories: ["E-Commerce", "Dashboard"],
       url: "https://cahier-angular-qhet.vercel.app/login",
-      screenshot: "/screenshots/cafe-cashier.webp",
     },
     {
       titleEn: "Islamic Structure",
@@ -459,7 +413,6 @@ export default function Projects() {
       tags: ["React", "Islamic", "Architecture", "Vercel"],
       category: "Landing",
       url: "https://islamic-structure.vercel.app/",
-      screenshot: "/screenshots/islamic-structure.webp",
     },
   ];
 
@@ -552,7 +505,7 @@ export default function Projects() {
                       }}
                     >
                       <div className="relative overflow-hidden" style={{ height: 220 }}>
-                        <LivePreview url={p.url} screenshot={p.screenshot} />
+                        <LivePreview url={p.url} />
                         <div
                           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           style={{ backgroundColor: "rgba(0,0,0,0.52)", backdropFilter: "blur(3px)" }}

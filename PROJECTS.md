@@ -104,7 +104,7 @@ Obrix/
 - **About Section** - Company overview with animated cards
 - **Services Section** - Three main services with hover effects
 - **Packages Section** - Three pricing tiers (Starter, Growth, Studio)
-- **Why Orbix Section** - Feature chips with hover animations
+- **Why Obrix Section** - Feature chips with hover animations
 - **CTA Section** - Contact call-to-action
 - **Footer** - Quick links and social media
 
@@ -287,7 +287,7 @@ npm run preview
 - **About** - Company overview with animated cards
 - **Services** - Three service cards with hover effects
 - **Packages** - Three pricing tiers
-- **WhyOrbix** - Feature chips
+- **WhyObrix** - Feature chips
 - **CTA** - Contact call-to-action
 - **Footer** - Footer with links and social media
 
@@ -398,5 +398,5 @@ The project uses CSS custom properties for theming:
 
 ## License
 
-© 2026 orbix. All rights reserved.
+© 2026 Obrix. All rights reserved.
 Built by Eng/Riadkassab.

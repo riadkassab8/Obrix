@@ -23,7 +23,7 @@ The navbar includes the following navigation links:
 
 #### 1. Logo Section
 - Rotating hexagonal SVG shape
-- Animated "orbix" text that appears/disappears
+- Animated "Obrix" text that appears/disappears
 - Links to home page (`/`)
 
 #### 2. Desktop Navigation

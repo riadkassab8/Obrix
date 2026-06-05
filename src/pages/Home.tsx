@@ -2,11 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { m, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { useLang } from "@/contexts/LangContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "sonner";
-import emailjs from "@emailjs/browser";
 import { 
   Moon, Sun, Menu, X, ArrowRight, ArrowLeft, Code, 
   TrendingUp, Monitor, Globe, Instagram, Facebook, Linkedin, Zap, 
@@ -16,15 +11,6 @@ import { Button } from "@/components/ui/button";
 
 const WA_URL = "https://wa.me/+201025187974";
 const GMAIL   = "mailto:riadkassab320@gmail.com";
-
-// Contact Form Schema
-const contactFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
 
 /* ── Legendary smooth scroll (easeInOutExpo) ── */
 function useSmoothScroll() {
@@ -331,7 +317,7 @@ export function Navbar() {
               </svg>
             </m.div>
             
-            {/* الكلمة الكاملة orbix تطلع من جوا الشكل السداسي */}
+            {/* الكلمة الكاملة Obrix تطلع من جوا الشكل السداسي */}
             <m.span
               animate={{ 
                 x: [-50, 0, 0, 0, -50],
@@ -347,7 +333,7 @@ export function Navbar() {
               className="font-extrabold text-3xl tracking-tighter transition-colors group-hover:text-[var(--accent1)]"
               style={{ color: "var(--text)" }}
             >
-              orbix
+              Obrix
             </m.span>
           </a>
 
@@ -391,7 +377,6 @@ export function Navbar() {
             >
               {theme === "dark" ? <Sun size={18} style={{ color: "var(--text)" }} /> : <Moon size={18} style={{ color: "var(--text)" }} />}
             </m.button>
-            <WABtn href={WA_URL} />
           </div>
 
           <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -472,7 +457,6 @@ export function Navbar() {
                   {theme === "dark" ? <Sun size={20} style={{ color: "var(--text)" }} /> : <Moon size={20} style={{ color: "var(--text)" }} />}
                 </button>
               </div>
-              <WABtn href={WA_URL} fullWidth />
             </div>
           </m.div>
         )}
@@ -551,7 +535,7 @@ export function Hero() {
           style={{ color: "var(--text-muted)" }}
         >
           {lang === "en" 
-            ? "From stunning websites to viral campaigns — orbix turns your vision into a digital experience people remember." 
+            ? "From stunning websites to viral campaigns — Obrix turns your vision into a digital experience people remember." 
             : "من المواقع المذهلة إلى الحملات الفيروسية — أوبريكس تحول رؤيتك إلى تجربة رقمية لا تُنسى."}
         </m.p>
         
@@ -615,7 +599,7 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <FadeInWhenVisible>
             <div className="inline-block px-4 py-1.5 rounded-full mb-6 text-sm font-semibold border" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}>
-              {lang === "en" ? "✦ About orbix" : "✦ عن أوبريكس"}
+              {lang === "en" ? "✦ About Obrix" : "✦ عن أوبريكس"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: "var(--text)" }}>
               {lang === "en" ? "We're not just another agency." : "نحن لسنا مجرد وكالة أخرى."}
@@ -830,7 +814,7 @@ export function Packages() {
   );
 }
 
-export function WhyOrbix() {
+export function WhyObrix() {
   const { lang } = useLang();
 
   const chips = [
@@ -847,7 +831,7 @@ export function WhyOrbix() {
       <div className="container mx-auto px-6">
         <FadeInWhenVisible>
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center" style={{ color: "var(--text)" }}>
-            {lang === "en" ? "Why orbix?" : "لماذا أوبريكس؟"}
+            {lang === "en" ? "Why Obrix?" : "لماذا أوبريكس؟"}
           </h2>
           <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             {chips.map((chip, i) => (
@@ -870,39 +854,6 @@ export function WhyOrbix() {
 
 export function CTA() {
   const { lang } = useLang();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-  });
-
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-    try {
-      // Replace with your EmailJS service ID, template ID, and public key
-      await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        {
-          from_name: data.name,
-          from_email: data.email,
-          message: data.message,
-        },
-        "YOUR_PUBLIC_KEY"
-      );
-      toast.success(lang === "en" ? "Message sent successfully!" : "تم إرسال الرسالة بنجاح!");
-      reset();
-    } catch (error) {
-      toast.error(lang === "en" ? "Failed to send message. Please try again." : "فشل إرسال الرسالة. حاول مرة أخرى.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
   
   return (
     <section className="relative py-40 overflow-hidden" id="contact">
@@ -919,80 +870,14 @@ export function CTA() {
             </h2>
             <p className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto" style={{ color: "var(--text-muted)" }}>
               {lang === "en" 
-                ? "From idea to launch — orbix handles everything. Let's start a conversation."
+                ? "From idea to launch — Obrix handles everything. Let's start a conversation."
                 : "من الفكرة إلى الإطلاق — أوبريكس تتولى كل شيء. لنبدأ الحديث."}
             </p>
           </div>
           
-          <div className="max-w-2xl mx-auto">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <input
-                  {...register("name")}
-                  placeholder={lang === "en" ? "Your Name" : "اسمك"}
-                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{ 
-                    backgroundColor: "var(--card-bg)", 
-                    borderColor: "var(--card-border)",
-                    color: "var(--text)"
-                  }}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <input
-                  {...register("email")}
-                  type="email"
-                  placeholder={lang === "en" ? "Your Email" : "بريدك الإلكتروني"}
-                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{ 
-                    backgroundColor: "var(--card-bg)", 
-                    borderColor: "var(--card-border)",
-                    color: "var(--text)"
-                  }}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <textarea
-                  {...register("message")}
-                  rows={4}
-                  placeholder={lang === "en" ? "Your Message" : "رسالتك"}
-                  className="w-full px-6 py-4 rounded-2xl border focus:outline-none focus:ring-2 transition-all resize-none"
-                  style={{ 
-                    backgroundColor: "var(--card-bg)", 
-                    borderColor: "var(--card-border)",
-                    color: "var(--text)"
-                  }}
-                />
-                {errors.message && (
-                  <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
-                )}
-              </div>
-              
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 rounded-full font-bold text-white transition-all disabled:opacity-50"
-                style={{ backgroundColor: "var(--accent1)" }}
-              >
-                {isSubmitting 
-                  ? (lang === "en" ? "Sending..." : "جاري الإرسال...")
-                  : (lang === "en" ? "Send Message" : "إرسال الرسالة")
-                }
-              </button>
-            </form>
-            
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mt-8">
-              <WABtn href={WA_URL} />
-              <MailBtn href={GMAIL} />
-            </div>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+            <WABtn href={WA_URL} />
+            <MailBtn href={GMAIL} />
           </div>
         </FadeInWhenVisible>
       </div>
@@ -1025,7 +910,7 @@ export function Footer() {
                   />
                 </svg>
               </m.div>
-              <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
+              <span className="font-extrabold text-3xl tracking-tighter" style={{ color: "var(--text)" }}>Obrix</span>
             </div>
             <p className="text-lg font-medium" style={{ color: "var(--text-muted)" }}>
               {lang === "en" ? "Where design meets intelligence." : "حيث يلتقي التصميم بالذكاء."}
@@ -1079,8 +964,8 @@ export function Footer() {
         <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
           <p>
             {lang === "en"
-              ? "© 2026 orbix. Built by Obrix. All rights reserved."
-              : "© 2026 orbix. تصميم وتطوير Obrix. جميع الحقوق محفوظة."}
+              ? "© 2026 Obrix. Built by Obrix. All rights reserved."
+              : "© 2026 Obrix. تصميم وتطوير Obrix. جميع الحقوق محفوظة."}
           </p>
           <p>{lang === "en" ? "Crafted with obsession." : "صُنع بشغف."}</p>
         </div>
@@ -1100,7 +985,7 @@ export default function Home() {
       <About />
       <Services />
       <Packages />
-      <WhyOrbix />
+      <WhyObrix />
       <CTA />
       <Footer />
       <FloatingWhatsApp />
