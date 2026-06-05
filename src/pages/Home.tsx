@@ -9,12 +9,12 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { 
   Moon, Sun, Menu, X, ArrowRight, ArrowLeft, Code, 
-  TrendingUp, Monitor, Globe, Instagram, Zap, 
+  TrendingUp, Monitor, Globe, Instagram, Facebook, Linkedin, Zap, 
   Paintbrush, Users, Smartphone, Search, Rocket, ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const WA_URL = "https://wa.me/201098277229";
+const WA_URL = "https://wa.me/+20 10 25187974";
 const GMAIL   = "mailto:riadkassab320@gmail.com";
 
 // Contact Form Schema
@@ -428,7 +428,7 @@ export function Navbar() {
                     />
                   </svg>
                 </m.div>
-                <span className="font-extrabold text-2xl tracking-tighter" style={{ color: "var(--text)" }}>orbix</span>
+                <span className="font-extrabold text-2xl tracking-tighter" style={{ color: "var(--text)" }}>Obrix</span>
               </div>
               
               <button
@@ -1051,9 +1051,25 @@ export function Footer() {
               {lang === "en" ? "Connect" : "تواصل معنا"}
             </h4>
             <div className="flex gap-4 mb-6">
-              <div className="w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer hover:bg-[var(--accent1)] hover:text-white transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>IG</div>
-              <div className="w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer hover:bg-[var(--accent1)] hover:text-white transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>LI</div>
-              <div className="w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer hover:bg-[var(--accent1)] hover:text-white transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>Be</div>
+              <a 
+                href="https://www.facebook.com/profile.php?id=61590186044836" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border flex items-center justify-center hover:bg-[var(--accent1)] hover:text-white transition-colors" 
+                style={{ borderColor: "var(--border)", color: "var(--text)" }}
+              >
+                <Facebook size={20} />
+              </a>
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border flex items-center justify-center hover:bg-[var(--accent1)] hover:text-white transition-colors" 
+                style={{ borderColor: "var(--border)", color: "var(--text)" }}
+              >
+                <Instagram size={20} />
+              </a>
+              
             </div>
             <a href={GMAIL} className="font-bold text-lg hover:text-[var(--accent1)] transition-colors" style={{ color: "var(--text)" }}>
               riadkassab320@gmail.com
@@ -1064,8 +1080,8 @@ export function Footer() {
         <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
           <p>
             {lang === "en"
-              ? "© 2026 orbix. Built by Eng/Riadkassab. All rights reserved."
-              : "© 2026 orbix. تصميم وتطوير Eng/Riadkassab. جميع الحقوق محفوظة."}
+              ? "© 2026 orbix. Built by Obrix. All rights reserved."
+              : "© 2026 orbix. تصميم وتطوير Obrix. جميع الحقوق محفوظة."}
           </p>
           <p>{lang === "en" ? "Crafted with obsession." : "صُنع بشغف."}</p>
         </div>

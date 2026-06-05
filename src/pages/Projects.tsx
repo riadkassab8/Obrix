@@ -5,7 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { ArrowRight, ArrowLeft, Menu, X, Moon, Sun } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const WA_URL = "https://wa.me/201098277229";
+const WA_URL = "https://wa.me/+20 10 25187974";
 
 const IFRAME_W = 1280;
 const IFRAME_H = 960;
