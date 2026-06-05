@@ -6,6 +6,16 @@ import path from "path";
 
 export default defineConfig({
   base: "/",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
   plugins: [react(), tailwindcss(), visualizer({ open: true, gzipSize: true })],
   resolve: {
     alias: {
