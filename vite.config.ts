@@ -3,6 +3,19 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import path from "path";
+import type { Plugin } from "vite";
+
+const mimeFixPlugin: Plugin = {
+  name: 'mime-fix',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url?.endsWith('.js') || req.url?.endsWith('.mjs') || req.url?.endsWith('.ts') || req.url?.endsWith('.tsx')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      }
+      next();
+    });
+  }
+};
 
 export default defineConfig({
   base: "/",
@@ -16,7 +29,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react(), tailwindcss(), visualizer({ open: process.env.NODE_ENV !== "production", gzipSize: true })],
+  plugins: [react(), tailwindcss(), mimeFixPlugin, visualizer({ open: process.env.NODE_ENV !== "production", gzipSize: true })],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),
@@ -26,11 +39,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: "0.0.0.0",
-    headers: {
-      "Content-Type": "application/javascript",
-      "Access-Control-Allow-Origin": "*"
-    }
+    host: "0.0.0.0"
   },
   preview: {
     port: 4173,
