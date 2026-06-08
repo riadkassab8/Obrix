@@ -175,14 +175,14 @@ const navLinks = [
   { en: "Work", ar: "أعمالنا", href: "/projects" },
   { en: "Services", ar: "خدماتنا", href: "#services" },
   { en: "Packages", ar: "باقاتنا", href: "#packages" },
-  { en: "Contact", ar: "تواصل معنا", href: "#contact" }
+  { en: "Contact", ar: "تواصل معنا", href: "/contact" }
 ];
 
 const footerLinks = [
   { en: "Work", ar: "أعمالنا", href: "/projects" },
   { en: "Services", ar: "خدماتنا", href: "#services" },
   { en: "Packages", ar: "باقاتنا", href: "#packages" },
-  { en: "Contact", ar: "تواصل معنا", href: "#contact" }
+  { en: "Contact", ar: "تواصل معنا", href: "/contact" }
 ];
 
 function CursorGlow() {
@@ -339,22 +339,19 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link, i) => (
-              <m.a
+              <a
                 key={link.en}
                 href={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ 
-                  color: "var(--accent1)"
+                className="text-sm font-medium tracking-wide transition-colors duration-200 ease relative"
+                style={{
+                  color: link.href === "/" ? "var(--text)" : "var(--text-muted)"
                 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-sm font-semibold transition-colors relative group"
-                style={{ color: "rgba(255, 255, 255, 0.8)" }}
               >
                 {lang === "en" ? link.en : link.ar}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
-              </m.a>
+                {link.href === "/" && (
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--accent1)]" />
+                )}
+              </a>
             ))}
           </div>
 
@@ -880,7 +877,7 @@ export function CTA() {
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
             <WABtn href={WA_URL} />
-            <MailBtn href={GMAIL} />
+            <MailBtn href="/contact" />
           </div>
         </FadeInWhenVisible>
       </div>

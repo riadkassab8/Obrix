@@ -4,6 +4,7 @@ import { LazyMotion, domAnimation } from "framer-motion";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Projects from "@/pages/Projects";
+import Contact from "@/pages/Contact";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider } from "./contexts/LangContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -21,6 +22,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/projects" component={Projects} />
+          <Route path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>
       </main>

@@ -87,7 +87,7 @@ const navLinks = [
   { en: "Work", ar: "أعمالنا", href: "/projects" },
   { en: "Services", ar: "خدماتنا", href: "/#services" },
   { en: "Packages", ar: "باقاتنا", href: "/#packages" },
-  { en: "Contact", ar: "تواصل معنا", href: "/#contact" }
+  { en: "Contact", ar: "تواصل معنا", href: "/contact" }
 ];
 
 export function Navbar() {
@@ -154,22 +154,19 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link, i) => (
-              <m.a
+              <a
                 key={link.en}
                 href={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ 
-                  color: "var(--accent1)"
+                className="text-sm font-medium tracking-wide transition-colors duration-200 ease relative"
+                style={{
+                  color: link.href === "/projects" ? "var(--text)" : "var(--text-muted)"
                 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-sm font-semibold transition-colors relative group"
-                style={{ color: "rgba(255, 255, 255, 0.8)" }}
               >
                 {lang === "en" ? link.en : link.ar}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent1)] transition-all duration-300 group-hover:w-full" />
-              </m.a>
+                {link.href === "/projects" && (
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--accent1)]" />
+                )}
+              </a>
             ))}
           </div>
 
@@ -416,6 +413,60 @@ export default function Projects() {
       tags: ["React", "Islamic", "Architecture", "Vercel"],
       category: "Landing",
       url: "https://islamic-structure.vercel.app/",
+    },
+    {
+      titleEn: "Profissor Portfolio",
+      titleAr: "بورتفوليو أستاذ",
+      descEn: "Professional portfolio website for teachers and professors with academic focus.",
+      descAr: "موقع بورتفوليو احترافي للأساتذة والمدرسين مع تركيز أكاديمي.",
+      tags: ["React", "Teacher", "Education", "Vercel"],
+      category: "Portfolio",
+      url: "https://profissor-landing-teacher-landing.vercel.app/",
+    },
+    {
+      titleEn: "Metal Factory",
+      titleAr: "مصنع المعادن",
+      descEn: "Professional metal and steel factory website with industrial design and services showcase.",
+      descAr: "موقع مصنع معادن وفولاذ احترافي بتصميم صناعي وعرض للخدمات.",
+      tags: ["React", "Industrial", "Manufacturing", "Vercel"],
+      category: "Landing",
+      url: "https://metal-factory-steel-factory.vercel.app/",
+    },
+    {
+      titleEn: "H-Blend Coffee Menu",
+      titleAr: "قائمة H-Blend للقهوة",
+      descEn: "High-quality coffee menu website with elegant design and product showcase.",
+      descAr: "موقع قائمة قهوة عالي الجودة بتصميم أنيق وعرض للمنتجات.",
+      tags: ["React", "Coffee", "Restaurant", "Vercel"],
+      category: "Landing",
+      url: "https://h-blend-coffee-blend-coffee.vercel.app/",
+    },
+    {
+      titleEn: "E-Tmam Company",
+      titleAr: "شركة التمام",
+      descEn: "Professional company website with modern business design and corporate services.",
+      descAr: "موقع شركة احترافي بتصميم أعمال حديث وعرض للخدمات المؤسسية.",
+      tags: ["React", "Corporate", "Business", "Vercel"],
+      category: "Landing",
+      url: "https://e-tmam.vercel.app/",
+    },
+    {
+      titleEn: "Tourism Site",
+      titleAr: "موقع السياحة",
+      descEn: "Tourism and travel landing page with destination showcase and booking features.",
+      descAr: "صفحة هبوط للسياحة والسفر مع عرض للوجهات وميزات الحجز.",
+      tags: ["React", "Travel", "Tourism", "Vercel"],
+      category: "Landing",
+      url: "https://tourism-landing-tourist-landing-3ft.vercel.app/",
+    },
+    {
+      titleEn: "Dental Clinic",
+      titleAr: "عيادة الأسنان",
+      descEn: "Professional dental clinic website with appointment booking and service showcase.",
+      descAr: "موقع عيادة أسنان احترافي مع حجز المواعيد وعرض للخدمات.",
+      tags: ["React", "Medical", "Healthcare", "Vercel"],
+      category: "Landing",
+      url: "https://dental-clinic-dental-clinic.vercel.app/",
     },
   ];
 

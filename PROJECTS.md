@@ -126,7 +126,7 @@ Obrix/
 
 ## Deployed Projects
 
-### Portfolio Projects (3)
+### Portfolio Projects (4)
 
 1. **Professional Portfolio**
    - URL: https://new-portfolio-site-h2gw.vercel.app/
@@ -146,67 +146,103 @@ Obrix/
    - Tags: React, CSS Animations, Portfolio, Vercel
    - Description: Medical professional portfolio with service sections
 
+4. **Profissor Portfolio**
+   - URL: https://profissor-landing-teacher-landing.vercel.app/
+   - Category: Portfolio
+   - Tags: React, Teacher, Education, Vercel
+   - Description: Professional portfolio for teachers and professors
+
 ### E-Commerce Projects (3)
 
-4. **Eldod E-Commerce**
+5. **Eldod E-Commerce**
    - URL: https://eldod-ecommerce-wind.vercel.app/
    - Category: E-Commerce
    - Tags: React, Tailwind CSS, E-Commerce, Vercel
    - Description: Full-featured e-commerce platform with product catalog
 
-5. **Sneakers Store**
+6. **Sneakers Store**
    - URL: https://sneakers-ecommerce-henna.vercel.app/
    - Category: E-Commerce, Dashboard
    - Tags: React, E-Commerce, Fashion, Responsive
    - Description: Sneaker brand e-commerce store with product pages
 
-6. **JUBA Store**
+7. **JUBA Store**
    - URL: https://juba-store.vercel.app/
    - Category: Landing
    - Tags: React, E-Commerce, Fashion, Responsive
    - Description: Luxury fashion and footwear e-commerce platform
 
-### Landing Pages (6)
+### Landing Pages (11)
 
-7. **Coffee Corner**
+8. **Coffee Corner**
    - URL: https://coffee-corner-a1zq.vercel.app/
-   - Category: Landing
+   - Category: Landing, Menu
    - Tags: HTML5, CSS3, JavaScript, Bootstrap
    - Description: Modern coffee shop website with smooth animations
 
-8. **Same Menu Site**
+9. **Same Menu Site**
    - URL: https://new-same-menu-site.vercel.app/
-   - Category: Landing
+   - Category: Landing, Menu
    - Tags: React, Restaurant, Vercel
    - Description: Restaurant menu website with elegant design
 
-9. **Coffee Brand M**
+10. **Coffee Brand M**
    - URL: https://coffe-brand-m-salary.vercel.app/
    - Category: Landing
    - Tags: React, Coffee, Vercel
    - Description: Premium coffee brand website with product showcase
 
-10. **Coffee Low Budget**
-    - URL: https://coffe-low-budget.vercel.app/
-    - Category: Landing
-    - Tags: React, Coffee, Vercel
-    - Description: Budget-friendly coffee shop website
+11. **Coffee Low Budget**
+   - URL: https://coffe-low-budget.vercel.app/
+   - Category: Landing
+   - Tags: React, Coffee, Vercel
+   - Description: Budget-friendly coffee shop website
 
-11. **Islamic Structure**
-    - URL: https://islamic-structure.vercel.app/
-    - Category: Landing
-    - Tags: React, Islamic, Architecture, Vercel
-    - Description: Modern Islamic website showcasing Islamic architecture
+12. **Islamic Structure**
+   - URL: https://islamic-structure.vercel.app/
+   - Category: Landing
+   - Tags: React, Islamic, Architecture, Vercel
+   - Description: Modern Islamic website showcasing Islamic architecture
+
+13. **Metal Factory**
+   - URL: https://metal-factory-steel-factory.vercel.app/
+   - Category: Landing
+   - Tags: React, Industrial, Manufacturing, Vercel
+   - Description: Professional metal and steel factory website with industrial design
+
+14. **H-Blend Coffee Menu**
+   - URL: https://h-blend-coffee-blend-coffee.vercel.app/
+   - Category: Landing, Menu
+   - Tags: React, Coffee, Restaurant, Vercel
+   - Description: High-quality coffee menu website with elegant design
+
+15. **E-Tmam Company Site**
+   - URL: https://e-tmam.vercel.app/
+   - Category: Landing
+   - Tags: React, Corporate, Business, Vercel
+   - Description: Professional company website with modern business design
+
+16. **Tourism Site**
+   - URL: https://tourism-landing-tourist-landing-3ft.vercel.app/
+   - Category: Landing
+   - Tags: React, Travel, Tourism, Vercel
+   - Description: Tourism and travel landing page with destination showcase
+
+17. **Dental Clinic**
+   - URL: https://dental-clinic-dental-clinic.vercel.app/
+   - Category: Landing, Medical
+   - Tags: React, Medical, Healthcare, Vercel
+   - Description: Professional dental clinic website with appointment booking
 
 ### Education Projects (2)
 
-12. **Quran Academy**
+18. **Quran Academy**
     - URL: https://quran-academy-sooty.vercel.app/
     - Category: Education
     - Tags: React, Next.js, Tailwind CSS, Islamic Content
     - Description: Islamic learning platform with Quran recitation
 
-13. **Sabora Academy**
+19. **Sabora Academy**
     - URL: https://sabora-acadimy-gxkt.vercel.app/
     - Category: Education
     - Tags: React, Next.js, Education, LMS
@@ -214,15 +250,15 @@ Obrix/
 
 ### Dashboard Projects (1)
 
-14. **Café Cashier**
+20. **Café Cashier**
     - URL: https://cahier-angular-qhet.vercel.app/login
-    - Category: E-Commerce, Dashboard
+    - Category: E-Commerce, Dashboard, SAAS
     - Tags: Angular, TypeScript, Dashboard, Charts
-    - Description: Complete dashboard system with analytics and admin panel
+    - Description: Complete cashier system for coffee shops with analytics and admin panel
 
 ---
 
-**Total Projects: 14**
+**Total Projects: 20**
 **All projects deployed on Vercel**
 
 ---
