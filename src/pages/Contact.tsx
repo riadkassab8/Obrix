@@ -525,11 +525,8 @@ export default function Contact() {
                   disabled={isSubmitting}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className="w-full px-8 py-4 rounded-full font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                  className="uiverse-btn w-full px-8 py-4 rounded-full font-semibold text-sm transition-all flex items-center justify-center gap-2"
                   style={{
-                    backgroundColor: "transparent",
-                    color: "var(--accent1)",
-                    border: "2px solid var(--accent1)",
                     opacity: isSubmitting ? 0.7 : 1
                   }}
                 >
@@ -546,6 +543,26 @@ export default function Contact() {
                   )}
                 </m.button>
               </form>
+
+              {/* Direct Contact Options */}
+              <div className="mt-12 pt-8 border-t" style={{ borderColor: "var(--border)" }}>
+                <p className="text-center mb-6 font-semibold" style={{ color: "var(--text)" }}>
+                  {lang === "en" ? "Or contact us directly:" : "أو تواصل معنا مباشرة:"}
+                </p>
+                <div className="flex justify-center">
+                  <a
+                    href="https://wa.me/+201025187974"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp-btn flex items-center justify-center gap-3 px-10 py-5 rounded-full font-bold text-lg"
+                  >
+                    <svg viewBox="0 0 32 32" width="24" height="24" fill="currentColor">
+                      <path d="M16.002 2.667C8.638 2.667 2.667 8.637 2.667 16c0 2.363.627 4.674 1.818 6.697L2.667 29.333l6.804-1.782A13.268 13.268 0 0 0 16.002 29.333c7.363 0 13.331-5.97 13.331-13.333S23.365 2.667 16.002 2.667Zm6.03 18.093c-.33-.165-1.952-.963-2.255-1.073-.303-.11-.524-.165-.744.165-.22.33-.854 1.073-1.046 1.293-.193.22-.385.247-.715.082-.33-.165-1.394-.514-2.655-1.638-.981-.875-1.643-1.956-1.836-2.285-.192-.33-.02-.509.145-.673.149-.148.33-.385.495-.578.165-.192.22-.33.33-.55.11-.22.055-.413-.028-.578-.082-.165-.744-1.793-1.02-2.455-.27-.645-.543-.557-.744-.567l-.634-.011c-.22 0-.578.082-.881.413-.303.33-1.155 1.128-1.155 2.753s1.183 3.195 1.348 3.415c.165.22 2.328 3.555 5.642 4.987.789.34 1.404.543 1.883.695.791.251 1.511.216 2.08.131.634-.094 1.952-.798 2.228-1.57.275-.771.275-1.431.192-1.57-.082-.138-.303-.22-.633-.385Z"/>
+                    </svg>
+                    {lang === "en" ? "Chat on WhatsApp" : "تواصل عبر واتساب"}
+                  </a>
+                </div>
+              </div>
             </div>
           </FadeInWhenVisible>
         </div>

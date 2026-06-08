@@ -89,6 +89,41 @@ html[data-theme="dark"] {
 .uiverse-btn:active {
   transform: translateY(0);
 }
+
+/* ── WhatsApp button with hover animation ── */
+.whatsapp-btn {
+  background: linear-gradient(135deg, #4a4a5e, #3a3a4e);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+.whatsapp-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #4a4a5e, #5a5a6e, #6a6a7e, #4a4a5e);
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0.5;
+  animation: mutedGlow 3s linear infinite;
+  transition: opacity 0.5s ease;
+}
+.whatsapp-btn:hover {
+  background: #25D366;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+}
+.whatsapp-btn:hover::before {
+  opacity: 0;
+}
+.whatsapp-btn:active {
+  transform: translateY(-1px) scale(1);
+}
 @keyframes mutedGlow {
   0% {
     background-position: 0 0;

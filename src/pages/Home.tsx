@@ -552,7 +552,7 @@ export function Hero() {
             </Button>
           </a>
           <a href="#packages" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full sm:w-auto rounded-full px-8 py-6 text-lg border-2 hover:bg-[var(--surface2)] transition-colors" style={{ borderColor: "var(--border)", color: "var(--text)" }}>
+            <Button variant="outline" className="w-full sm:w-auto rounded-full px-8 py-7 text-lg border-2 hover:bg-[var(--surface2)] transition-colors min-h-[44px] min-w-[44px]" style={{ borderColor: "var(--border)", color: "var(--text)" }}>
               {lang === "en" ? "View Packages" : "استعرض الباقات"}
             </Button>
           </a>
@@ -673,10 +673,10 @@ export function Services() {
       tags: ["Instagram", "TikTok", "Facebook"]
     },
     {
-      title: lang === "en" ? "Desktop Apps" : "تطبيقات سطح المكتب",
-      icon: <Monitor />,
+      title: lang === "en" ? "Design" : "التصميم",
+      icon: <Paintbrush />,
       color: "var(--accent3)",
-      tags: ["POS", "ERP", "Automation"]
+      tags: ["UI/UX", "Branding", "Graphics"]
     }
   ];
 
