@@ -21,7 +21,7 @@
   --surface2: #f0eeea;
   --border: rgba(0,0,0,0.08);
   --text: #111118;
-  --text-muted: #777788;
+  --text-muted: #555566;
   --card-bg: rgba(255,255,255,0.9);
   --card-border: rgba(0,0,0,0.1);
   --navbar-bg: rgba(248,247,244,0.85);
@@ -39,7 +39,7 @@ html[data-theme="dark"] {
   --surface2: #12122a;
   --border: rgba(255,255,255,0.06);
   --text: #f0f0f8;
-  --text-muted: #5a5a7a;
+  --text-muted: #8a8aaa;
   --card-bg: rgba(255,255,255,0.03);
   --card-border: rgba(255,255,255,0.08);
   --navbar-bg: rgba(6,6,16,0.85);

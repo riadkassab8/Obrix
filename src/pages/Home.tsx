@@ -546,7 +546,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
           <a href="/projects" className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text-muted)] hover:scale-105 transition-transform rounded-full px-8 py-6 text-lg">
+            <Button className="w-full sm:w-auto bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text-muted)] hover:scale-105 transition-transform rounded-full px-8 py-7 text-lg min-h-[44px]">
               {lang === "en" ? "See Our Work" : "شاهد أعمالنا"}
               {lang === "en" ? <ArrowRight className="ml-2 w-5 h-5" /> : <ArrowLeft className="mr-2 w-5 h-5" />}
             </Button>
@@ -918,9 +918,9 @@ export function Footer() {
           </div>
           
           <div>
-            <h4 className="font-bold mb-6 text-lg" style={{ color: "var(--text)" }}>
+            <h3 className="font-bold mb-6 text-lg" style={{ color: "var(--text)" }}>
               {lang === "en" ? "Quick Links" : "روابط سريعة"}
-            </h4>
+            </h3>
             <div className="flex flex-col gap-3 font-medium" style={{ color: "var(--text-muted)" }}>
               {footerLinks.map(l => (
                 <a key={l.en} href={l.href} className="hover:text-[var(--accent1)] transition-colors w-fit">
@@ -939,6 +939,7 @@ export function Footer() {
                 href="https://www.facebook.com/profile.php?id=61590186044836" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
                 className="w-10 h-10 rounded-full border flex items-center justify-center hover:bg-[var(--accent1)] hover:text-white transition-colors" 
                 style={{ borderColor: "var(--border)", color: "var(--text)" }}
               >
@@ -948,6 +949,7 @@ export function Footer() {
                 href="https://instagram.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label="Follow us on Instagram"
                 className="w-10 h-10 rounded-full border flex items-center justify-center hover:bg-[var(--accent1)] hover:text-white transition-colors" 
                 style={{ borderColor: "var(--border)", color: "var(--text)" }}
               >
