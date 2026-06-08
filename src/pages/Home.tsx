@@ -545,8 +545,8 @@ export function Hero() {
           transition={{ delay: 1, duration: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <a href="/projects" className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text-muted)] hover:scale-105 transition-transform rounded-full px-8 py-7 text-lg min-h-[44px]">
+          <a href="/projects" className="inline-flex w-full sm:w-auto" style={{ minHeight: '44px', minWidth: '44px', padding: '12px 24px' }}>
+            <Button className="w-full sm:w-auto bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text-muted)] hover:scale-105 transition-transform rounded-full text-lg" style={{ minHeight: '44px', minWidth: '44px', padding: '12px 24px' }}>
               {lang === "en" ? "See Our Work" : "شاهد أعمالنا"}
               {lang === "en" ? <ArrowRight className="ml-2 w-5 h-5" /> : <ArrowLeft className="mr-2 w-5 h-5" />}
             </Button>
