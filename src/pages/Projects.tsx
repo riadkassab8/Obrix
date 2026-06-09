@@ -12,6 +12,7 @@ const IFRAME_H = 960;
 
 function LivePreview({ url }: { url: string }) {
   const [hasError, setHasError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div className="relative w-full overflow-hidden rounded-xl" style={{ height: 220 }}>
@@ -22,26 +23,34 @@ function LivePreview({ url }: { url: string }) {
           </span>
         </div>
       ) : (
-        <iframe
-          src={url}
-          width="400%"
-          height="400%"
-          scrolling="no"
-          loading="lazy"
-          onError={() => setHasError(true)}
-          style={{
-            transform: "scale(0.25)",
-            transformOrigin: "top left",
-            pointerEvents: "none",
-            border: "none",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "400%",
-            height: "400%",
-          }}
-          sandbox="allow-same-origin allow-scripts allow-forms"
-        />
+        <>
+          {!loaded && (
+            <div className="absolute inset-0" style={{ backgroundColor: "var(--surface)" }} />
+          )}
+          <iframe
+            src={url}
+            width="400%"
+            height="400%"
+            scrolling="no"
+            loading="lazy"
+            onError={() => setHasError(true)}
+            onLoad={() => setLoaded(true)}
+            style={{
+              transform: "scale(0.25)",
+              transformOrigin: "top left",
+              pointerEvents: "none",
+              border: "none",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "400%",
+              height: "400%",
+              opacity: loaded ? 1 : 0,
+              transition: "opacity 0.3s ease",
+            }}
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+          />
+        </>
       )}
     </div>
   );
@@ -467,6 +476,33 @@ export default function Projects() {
       tags: ["React", "Medical", "Healthcare", "Vercel"],
       category: "Landing",
       url: "https://dental-clinic-dental-clinic.vercel.app/",
+    },
+    {
+      titleEn: "Visionary Tech",
+      titleAr: "فيجنري تك",
+      descEn: "Modern technology landing page with innovative design and cutting-edge features.",
+      descAr: "صفحة هبوط تكنولوجية حديثة بتصميم مبتكر وميزات متقدمة.",
+      tags: ["React", "Technology", "Landing", "Vercel"],
+      category: "Landing",
+      url: "https://visionary-tech-landing.vercel.app/",
+    },
+    {
+      titleEn: "Clinic Insight Hub",
+      titleAr: "مركز رؤية العيادة",
+      descEn: "Comprehensive dashboard for clinic management with patient tracking and analytics.",
+      descAr: "لوحة تحكم شاملة لإدارة العيادات مع تتبع المرضى والتحليلات.",
+      tags: ["React", "Dashboard", "Healthcare", "Analytics"],
+      category: "Dashboard",
+      url: "https://clinic-insight-hub-ten.vercel.app/",
+    },
+    {
+      titleEn: "Analytics Pro",
+      titleAr: "أناليتيكس برو",
+      descEn: "Advanced analytics dashboard with data visualization and comprehensive reporting tools.",
+      descAr: "لوحة تحكم تحليلات متقدمة مع تصور البيانات وأدوات تقارير شاملة.",
+      tags: ["React", "Dashboard", "Analytics", "Charts"],
+      category: "Dashboard",
+      url: "https://analytics-pro-nu.vercel.app/",
     },
   ];
 
